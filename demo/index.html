@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>TabaKordion - jQuery Accessible Tabs and Accordion</title>
+	<meta charset="utf-8" />
+	<meta name="author" content="Tariq Khan - www.tariqkhan.co.uk" />
+	<meta name="description" content="A fully accessible to WAI specification; tabs and accordion jQuery plugin. Makes use of ARIA and HTML data configuration." />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="../src/jquery.TabaKordion.js"></script>
+	<style media="all">
+		/*ACCORDION*/
+		.accordion .tab {
+			margin:0;
+			cursor:pointer;
+			background:#CCC;
+			border:1px solid #000;
+		}
+		.accordion .tab:before {
+			top:-1px;
+			height:10px;
+			content:"+";
+			margin:0 5px;
+			position:relative;
+			padding:2px 2px 3px;
+			display:inline-block;
+			border:1px solid #000;
+			font:700 22px/8px serif;
+		}
+		.accordion .tab[aria-expanded="true"]:before {
+			top:-3px;
+			content:"–";
+			padding:0 3px 5px;
+		}
+		.accordion .tab.selected:before {
+			border-color:#FFF;
+		}
+		/*TABS*/	
+		.tabs .tablist {
+			margin:0;	
+			padding:0;
+			list-style:none;
+		}
+		.tabs .tab {
+			float:left;
+			font-weight:700;
+			margin:0 1px 0 0;
+			text-align:center;
+			display:inline-block;
+		}
+		.tabs .tab a, .tabs .tab span {
+			color:#000;
+			padding:10px;
+			display:block;
+			cursor:pointer;
+			background:#CCC;
+			text-decoration:none;
+			border:1px solid #000;
+		}
+		.tabs .panel {
+			clear:both;
+			padding:10px;
+			display:block;
+			border:1px solid #000;
+		}
+		/*GENERIC*/
+		.accordion .tab.selected,
+		.tabs .tab.selected a, .tabs .tab.selected span {
+			color:#FFF;
+			background:#000;
+		}
+		.accordion .tab.focus, .accordion .tab.focus:before, .accordion .tab:hover, .accordion .tab:hover:before,
+		.tabs .tab.focus a, .tabs .tab a:hover, .tabs .tab.focus span, .tabs .tab span:hover {
+			color:#F00;
+			border-color:#F00;
+		}
+		/*
+		.visually-hidden {
+			top:-30em;
+			left:-300em;
+			#=position:absolute;
+		}
+		*/
+		:focus {
+			outline:0;
+			color:#FFF;
+			background:#F00;
+			text-decoration:none;
+		}
+	</style>
+</head>
+<body>
+	<h1>TabaKordion - jQuery Accessible Tabs and Accordion</h1>
+	<div id="accordion" class="tabakordion accordion" role="tablist" multiselectable="true">
+		<h2 id="tab1" class="tab" aria-controls="panel1">Keyboard Support</h2>
+		<div id="panel1" class="panel" aria-labelledby="tab1">
+			<p>If focus is on a tab button:</p>
+			<ul>
+				<li><strong>Left / Up Arrow:</strong> Show the previous tab</li>
+				<li><strong>Right / Down Arrow:</strong> Show the next tab</li>
+				<li><strong>Home:</strong> Show the first tab</li>
+				<li><strong>End:</strong> Show the last tab</li>
+				<li><strong>Enter / Space:</strong> Expand / Collapse panel</li>
+			</ul>
+			<p>If focus is on an element in a tab panel:</p>
+			<ul>
+				<li><strong>Control + Up Arrow/Left Arrow:</strong> Set focus on the tab button for the currently displayed tab.</li>
+				<li><strong>Control + Page Up:</strong> Show the previous tab and set focus on its corresponding tab button. Shows the last tab in the panel if current tab is the first one.</li>
+				<li><strong>Control + Page Down:</strong> Show the next tab and set focus on its corresponding tab button. Shows the first tab in the panel if current tab is the last one.</li>
+				<li><strong>Tab:</strong> Move focus to next focusable element in panel. If focus is on last focusable element, move focus to first focusable element of next expanded panel or, if no more expanded panels or focusable elements, to first focusable element following tab panel in the page.</li>
+				<li><strong>Shift + Tab:</strong> The reverse of Tab.</li>
+			</ul>
+			<p><strong>NOTE:</strong> Google Chrome does not propagate Control+ Page Up or Control+ Page Down to the web page when multiple tabs are open. This key combination will not function correctly in that case.</p>
+		</div>
+		<h2 id="tab2" class="tab" aria-controls="panel2">Heading sample</h2>
+		<div id="panel2" class="panel" aria-labelledby="tab2">
+			<h3>Subheading</h3>
+			<p>Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content <a href=".">Sample content</a> Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content <a href=".">Sample content</a> Sample content</p>
+		</div>
+		<h2 id="tab3" class="tab" aria-controls="panel3">Lorem Ipsum</h2>
+		<div id="panel3" class="panel" aria-labelledby="tab3">
+			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into <a href=".">electronic typesetting</a>, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+		</div>
+	</div>
+	<h1>Accessible tabs</h1>
+	<div id="tabs" class="tabakordion tabs">
+		<ul class="tablist" role="tablist">
+			<li id="tab4" class="tab" aria-controls="panel4"><a href="#panel4">Keyboard Support</a></li>
+			<li id="tab5" class="tab" aria-controls="panel5"><a href="#panel5">Heading sample</a></li>
+			<li id="tab6" class="tab" aria-controls="panel6"><a href="#panel6">Lorem Ipsum</a></li>
+		</ul>
+		<div id="panel4" class="panel" aria-labelledby="tab4">
+			<h2>Keyboard Support</h2>
+			<p>If focus is on a tab:</p>
+			<ul>
+				<li><strong>Left / Up Arrow:</strong> Show the previous tab</li>
+				<li><strong>Right / Down Arrow:</strong> Show the next tab</li>
+				<li><strong>Home:</strong> Show the first tab</li>
+				<li><strong>End:</strong> Show the last tab</li>
+			</ul>
+			<p>If focus is on a tab panel element:</p>
+			<ul>
+				<li><strong>Control + Up Arrow/Left Arrow:</strong> Set focus on the tab button for the currently displayed tab.</li>
+				<li><strong>Control + Page Up:</strong> Show the previous tab and set focus on its corresponding tab button. Shows the last tab in the panel if current tab is the first one.</li>
+				<li><strong>Control + Page Down:</strong> Show the next tab and set focus on its corresponding tab button. Shows the first tab in the panel if current tab is the last one.</li>
+				<li><strong>Tab:</strong> Move focus to next focusable element in panel. If focus is on last focusable element, move focus to first focusable element of next expanded panel or, if no more expanded panels or focusable elements, to first focusable element following tab panel in the page.</li>
+				<li><strong>Shift + Tab:</strong> The reverse of Tab.</li>
+			</ul>
+			<p><strong>NOTE:</strong> Google Chrome does not propagate Control+ Page Up or Control+ Page Down to the web page when multiple tabs are open. This key combination will not function correctly in that case.</p>
+		</div>
+		<div id="panel5" class="panel" aria-labelledby="tab5">
+			<h2>Heading sample</h2>
+			<p>Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content <a href=".">Sample content</a> Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content Sample content <a href=".">Sample content</a> Sample content</p>
+		</div>
+		<div id="panel6" class="panel" aria-labelledby="tab6">
+			<h2>Lorem Ipsum</h2>
+			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into <a href=".">electronic typesetting</a>, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+		</div>
+	</div>
+	<script type="text/javascript">
+		//<![CDATA[
+			$(function() {
+				$("#accordion, #tabs").TabaKordion();
+			});
+		//]]>
+	</script>
+	<script type="text/javascript">var _gaq=[['_setAccount','UA-33380752-1'],['_trackPageview']];(function(d,t){var ga=d.createElement(t);ga.type='text/javascript';ga.async=1;ga.src=('https:' == document.location.protocol ? 'https://ssl' : 'http://www')+'.google-analytics.com/ga.js';var s=d.getElementsByTagName(t)[0];s.parentNode.insertBefore(ga,s);}(document,'script'));</script>
+</body>
+</html>
