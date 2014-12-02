@@ -86,7 +86,6 @@ The TabaKordion plugin currently has 2 configuration options (more coming soon).
 
 To use TabaKordion in it's default configuration, which is as an Accordion:
 
-	```html
 	<div id="accordion" class="tabakordion accordion" role="tablist" multiselectable="true">
 		<h2 id="tab1" class="tab" aria-controls="panel1">Keyboard Support</h2>
 		<div id="panel1" class="panel" aria-labelledby="tab1">
@@ -118,7 +117,6 @@ To use TabaKordion in it's default configuration, which is as an Accordion:
 			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into <a href=".">electronic typesetting</a>, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 		</div>
 	</div>
-	```
 
 The above uses no configuration and is in it's default state.
 
@@ -128,7 +126,6 @@ The "accordion" class assigned to the wrapping div element is not required.
 
 To use TabaKordion as Tabs, add the class "tabs" to the wrapping div element or replace the "accordion" class (if exists):
 
-	```html
 	<div id="tabs" class="tabakordion tabs">
 		<ul class="tablist" role="tablist">
 			<li id="tab4" class="tab" aria-controls="panel4"><a href="#panel4">Keyboard Support</a></li>
@@ -163,7 +160,6 @@ To use TabaKordion as Tabs, add the class "tabs" to the wrapping div element or 
 			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into <a href=".">electronic typesetting</a>, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 		</div>
 	</div>
-	```
 
 #### Preselected panel
 
