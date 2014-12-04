@@ -1,25 +1,32 @@
-;(function($, window, document, undefined) {
+(function($, window, undefined) {
+	"use strict";
 	var	pluginName = 'TabaKordion',
 		defaults = {
-			accordion:	true,
-			openFirst:	true
+			accordion:		true,	// Function as accordion by default else function as tabs
+			openFirst:		true,	// Open first panel on page load if true unless indicated by select class
+			multiSelect:	true,	// Open multiple panels simultaneously if true (false fails WAI specifications)
+			showHide:		false	// Function as show/hide region
 		};
-	function Plugin(element, options) {
+	function TabaKordion(element, options) {
 		this.element = element;
 		this.options = $.extend( {}, defaults, options);
 		this._defaults = defaults;
 		this._name = pluginName;
 		this.$TabaKordion = $(element);
-		this.$tabs = this.$TabaKordion.find('.tab');
-		this.$panels = this.$TabaKordion.children('.panel');
 		if(this.$TabaKordion.hasClass('tabs')) {
 			this.options.accordion = false;
+		} else if(this.$TabaKordion.hasClass('nomultiselect')) {
+			this.options.multiSelect = false;
+		} else if(this.$TabaKordion.hasClass('showhide')) {
+			this.options.showHide = true;
 		}
+		this.$tabs = this.options.showHide ? this.$TabaKordion : this.$TabaKordion.find('.tab');
+		this.$panels = this.options.showHide ? $(this.$TabaKordion.attr('href')) : this.$TabaKordion.children('.panel');
 		this.keys = new keyCodes();
 		this.bindEventHandlers();
 		this.init();
 	}
-	// Object defining names for keycodes
+	// Object defining names for key codes
 	function keyCodes() {
 		// Trigger keys
 		this.tab		= 9;
@@ -37,8 +44,7 @@
 		this.right		= 39;
 		this.down		= 40;
 	}
-	// focusable is a jQuery extension to add :focusable selector; credit to ajpiano on jQuery forums
-	// Used to get all focusable elements in a panel
+	// focusable: jQuery extension to add :focusable selector to get all focusable elements in a panel; credit to ajpiano on jQuery forums
 	$.extend($.expr[':'], {
 		focusable: function(element) {
 			var	nodeName = element.nodeName.toLowerCase(),
@@ -63,38 +69,52 @@
 			return false;
 		}
 	});
-	Plugin.prototype = {
-		// Initialise TabaKordion by applying ARIA attributes and hiding all panels except class selected or first
+	TabaKordion.prototype = {
 		init: function() {
-			this.$panels.attr('role', 'tabpanel').attr('aria-hidden', 'true').hide();
-			this.$tabs.attr('role', 'tab').attr('aria-selected', 'false').attr('tabindex', '-1')
-			if(this.options.accordion) {
-				this.$tabs.attr('aria-expanded', 'false').append(' <span class="visually-hidden">(collapsed)</span>');
+			if(this.options.showHide) {
+				this.$tabs.attr('aria-expanded', 'false').attr('aria-controls', this.$panels.attr('id')).prepend('<span>Show</span> ');
+				this.$panels.attr('aria-expanded', 'false').attr('aria-labelledby', this.$tabs.attr('id')).attr('role', 'region').attr('tabindex', '-1').addClass('showhide-region').hide();
 			} else {
-				this.$tabs.find('a').each(function() {
-					$(this).replaceWith('<span>'+$(this).text()+'</span>');
-				});
+				this.$panels.attr('role', 'tabpanel').attr('aria-hidden', 'true').hide();
+				this.$tabs.attr('role', 'tab').attr('aria-selected', 'false').attr('tabindex', '-1');
+				if(this.options.accordion) {
+					if(this.options.multiSelect) {
+						this.$TabaKordion.attr('multiselectable', true);
+					}
+					this.$tabs.attr('aria-expanded', 'false').append(' <span class="visually-hidden">(collapsed)</span>');
+				} else {
+					this.$tabs.find('a').each(function() {
+						$(this).replaceWith('<span>'+$(this).text()+'</span>');
+					});
+				}
 			}
 			var anchor = window.location.hash;
 			if(anchor && $(anchor).length) {
 				this.$tabs.removeClass('selected');
 				$(anchor).addClass('selected');
+				if(this.options.showHide) {
+					anchor = anchor.substring(1);
+					if(this.$tabs.attr('id') === anchor || this.$panels.attr('id') === anchor) {
+						this.toggleRegion();
+					}
+				}
 			}
-			var $tab = this.$tabs.filter('.selected');
-			if(!$tab.length && this.options.openFirst) {
-				$tab = this.$tabs.first();
+			if(!this.options.showHide) {
+				var $tab = this.$tabs.filter('.selected');
+				if(!$tab.length && this.options.openFirst) {
+					$tab = this.$tabs.first();
+				}
+				$tab.addClass('selected').attr('aria-selected', 'true').attr('tabindex', '0');
+				if(this.options.accordion) {
+					$tab.attr('aria-expanded', 'true').find('.visually-hidden').text('(expanded)');
+				}
+				this.$TabaKordion.find('#'+$tab.attr('aria-controls')).show().attr('aria-hidden', 'false');
 			}
-			$tab.addClass('selected').attr('aria-selected', 'true').attr('tabindex', '0');
-			if(this.options.accordion) {
-				$tab.attr('aria-expanded', 'true').find('.visually-hidden').text('(expanded)');
-			}
-			this.$TabaKordion.find('#'+$tab.attr('aria-controls')).show().attr('aria-hidden', 'false');
 		},
-		// Bind event handlers for headings and panels
 		bindEventHandlers: function() {
 			// Create reference so pointer can be accessed in functions with events
 			var thisObj = this;
-			// Bind handlers for tab headings
+			// Bind handlers for headings
 			this.$tabs.keydown(function(e) {
 				return thisObj.tabKeyDownHandler($(this), e);
 			});
@@ -108,22 +128,45 @@
 				return thisObj.tabBlurHandler($(this), e);
 			});
 			// Bind handlers for panel focusable elements
-			this.$panels.keydown(function(e) {
-				return thisObj.panelElementsKeyDownHandler($(this), e);
-			});
+			if(!this.options.showHide) {
+				this.$panels.keydown(function(e) {
+					return thisObj.panelElementsKeyDownHandler($(this), e);
+				});
+			}
 			if(this.options.accordion) {
 				this.$panels.click(function(e) {
 					return thisObj.panelElementsClickHandler($(this), e);
 				});
 			}
+			if(this.options.showHide) {
+				this.$panels.blur(function(e) {
+					return thisObj.panelBlurHandler($(this), e);
+				});
+			}
 		},
-		// Display/Hide panel associated with tab header and bind/unbind keydown handler to its panel focusable elements
+		// Toggle the display of the show/hide region
+		toggleRegion: function() {
+			var $tab = this.$tabs;
+			this.$panels.slideToggle(function() {
+				if($(this).attr('aria-expanded') === 'false') {
+					$(this).attr('aria-expanded', 'true').focus();
+					$tab.attr('aria-expanded', 'true').addClass('selected').find('span').html('Hide');
+				} else {
+					$(this).attr('aria-expanded', 'false');
+					$tab.attr('aria-expanded', 'false').removeClass('selected').find('span').html('Show');
+				}
+			});
+		},
+		// Show/hide panel associated with tab header
 		togglePanel: function($tab) {
 			if(!this.options.accordion) {
 				this.$panels.attr('aria-hidden', 'true').hide();
+			} else if(this.options.accordion && !this.options.multiSelect) {
+				this.$tabs.attr('aria-expanded', 'false').find('.visually-hidden').text('(collapsed)');
+				this.$panels.attr('aria-hidden', 'true').slideUp();
 			}
-			$panel = this.$TabaKordion.find('#'+$tab.attr('aria-controls'));
-			if($panel.attr('aria-hidden') == 'true') {
+			var $panel = this.$TabaKordion.find('#'+$tab.attr('aria-controls'));
+			if($panel.attr('aria-hidden') === 'true') {
 				$panel.attr('aria-hidden', 'false');
 				if(this.options.accordion) {
 					$tab.attr('aria-expanded', 'true').find('.visually-hidden').text('(expanded)');
@@ -141,7 +184,7 @@
 				}
 			}
 		},
-		// Give focus to new tab header and if tabs; current panel is hidden and new panel is displayed
+		// Focus new tab header and if tabs; current panel is hidden and new panel is displayed
 		switchTabs: function($curTab, $newTab) {
 			$curTab.removeClass('selected focus').attr('tabindex', '-1').attr('aria-selected', 'false');
 			if(!this.options.accordion) {
@@ -150,16 +193,16 @@
 			}
 			$newTab.addClass('selected').attr('aria-selected', 'true').attr('tabindex', '0').focus();
 		},
-		// Tab heading key down event handler: return true if propagating, false if consuming event
+		// Tab header key down event handler: return true = propagating, false = consuming event
 		tabKeyDownHandler: function($tab, e) {
-			if(e.altKey) {
+			if(e.altKey || (this.options.showHide && (e.keyCode !== this.keys.enter && e.keyCode !== this.keys.space))) {
 				return true;
 			}
 			switch(e.keyCode) {
 				case this.keys.enter:
 				case this.keys.space: {
 					if(this.options.accordion) {
-						this.togglePanel($tab);
+						this.options.showHide ? this.toggleRegion() : this.togglePanel($tab);
 						e.stopPropagation();
 						return false;
 					}
@@ -198,28 +241,29 @@
 				}
 			}
 		},
-		// Tab heading click event handler
 		tabClickHandler: function($tab, e) {
-			$tab.addClass('selected').attr('tabindex', '0').attr('aria-selected', 'true');
-			this.$tabs.not($tab).attr('tabindex', '-1').attr('aria-selected', 'false').removeClass('selected');
-			this.togglePanel($tab);
+			if(this.options.showHide) {
+				this.toggleRegion();
+			} else {
+				$tab.addClass('selected').attr('tabindex', '0').attr('aria-selected', 'true');
+				this.$tabs.not($tab).attr('tabindex', '-1').attr('aria-selected', 'false').removeClass('selected');
+				this.togglePanel($tab);
+			}
 			if(this.options.accordion) {
 				e.stopPropagation();
 				return false;
 			}
 			return true;
 		},
-		// Tab heading focus event handler
 		tabFocusHandler: function($tab, e) {
 			$tab.addClass('focus');
 			return true;
 		},
-		// Tab heading blur event handler
 		tabBlurHandler: function($tab, e) {
 			$tab.removeClass('focus');
 			return true;
 		},
-		// Panel key down event handler: return true if propagating else false if consuming event
+		// Panel key down event handler: return true = propagating, false = consuming event
 		panelElementsKeyDownHandler: function($panel, e) {
 			if(e.altKey) {
 				return true;
@@ -231,21 +275,21 @@
 						panelIndex	= this.$panels.index($panel),
 						numPanels	= this.$panels.length;
 					if(e.shiftKey) {
-						// If this is first focusable item in panel; find preceding expanded panel that has focusable items and set focus to it. Do not process if no preceding panel or focusable items
+						// If first focusable item in panel; find preceding expanded panel focusable items and focus it. Do not process if no preceding panel or focusable items
 						if(curIndex == 0 && panelIndex > 0) {
-							// Iterate through previous panels until we find one that is expanded and has focusable elements
+							// Iterate through previous panels until we find one expanded with focusable elements
 							for(var index = panelIndex - 1; index >= 0; index--) {
 								var	$prevPanel = this.$panels.eq(index),
 									$prevTab = $('#' + $prevPanel.attr('aria-labelledby'));
-								// Get the focusable items in panel
+								// Get focusable items in panel
 								$focusable.length = 0;
 								$focusable = $prevPanel.find(':focusable');
 									if($focusable.length > 0) {
-									// Focusable items in panel exists; set focus to the last item
+									// Focusable items in panel exists; set focus to last item
 									$focusable.last().focus();
-									// Reset aria-selected state of the tabs
+									// Reset aria-selected state of tabs
 									this.$tabs.attr('aria-selected', 'false').removeClass('selected');
-									// Set associated tab's aria-selected state
+									// Set associated tabs aria-selected state
 									$prevTab.attr('aria-selected', 'true').addClass('selected');
 									e.stopPropagation;
 									return false;
@@ -253,9 +297,9 @@
 							}
 						}
 					} else if (panelIndex < numPanels) {
-						// If this is the last focusable item in the panel; find nearest following expanded panel that has focusable items and set focus to it. Do not process if no preceding panel or focusable items
+						// If last focusable item in panel; find following expanded panel focusable items and focus it. Do not process if no preceding panel or focusable items
 						if(curIndex == $focusable.length - 1) {
-							// Iterate through following panels until we find one that is expanded and has focusable elements
+							// Iterate through following panels until we find one expanded with focusable elements
 							for(var index = panelIndex + 1; index < numPanels; index++) {
 								var	$nextPanel = this.$panels.eq(index),
 									$nextTab = $('#'+$nextPanel.attr('aria-labelledby'));
@@ -263,7 +307,7 @@
 								$focusable.length = 0;
 								$focusable = $nextPanel.find(':focusable');
 								if($focusable.length > 0) {
-									// There are focusable items in panel; set focus to first item
+									// Focusable items in panel; set focus to first item
 									$focusable.first().focus();
 									// Reset aria-selected state of tabs
 									this.$tabs.attr('aria-selected', 'false').removeClass('selected');
@@ -309,18 +353,25 @@
 			}
 			return true;
 		},
-		// Panel click event handler for accordion only to highlight clicked paneld
+		panelBlurHandler: function($panel, e) {
+			this.$tabs.removeClass('selected');
+			return true;
+		},
 		panelElementsClickHandler: function($panel, e) {
-			var $tab = $('#'+$panel.attr('aria-labelledby')).attr('tabindex', '0').attr('aria-selected', 'true').addClass('selected');
-			this.$tabs.not($tab).attr('tabindex', '-1').attr('aria-selected', 'false').removeClass('selected');
+			if(this.options.showHide) {
+				this.$tabs.addClass('selected');
+			} else {
+				var $tab = $('#'+$panel.attr('aria-labelledby')).attr('tabindex', '0').attr('aria-selected', 'true').addClass('selected');
+				this.$tabs.not($tab).attr('tabindex', '-1').attr('aria-selected', 'false').removeClass('selected');
+			}
 			return true;
 		}
 	};
 	$.fn[pluginName] = function(options) {
 		return this.each(function() {
 			if(!$.data(this, 'plugin_'+pluginName)) {
-				$.data(this, 'plugin_'+pluginName, new Plugin(this, options));
+				$.data(this, 'plugin_'+pluginName, new TabaKordion(this, options));
 			}
 		});
-	};
-})(jQuery, window, document);
+	}
+})(jQuery, window);
