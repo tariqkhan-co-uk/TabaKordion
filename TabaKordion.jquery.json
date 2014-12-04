@@ -1,18 +1,20 @@
 {
 	"name": "TabaKordion",
 	"title": "jQuery TabaKordion",
-	"description": "A fully accessible to WAI specification; tabs and accordion jQuery plugin. Makes use of ARIA and HTML data configuration.",
+	"description": "A fully accessible to WAI specification; tabs, accordion and show/hide jQuery plugin using ARIA attributes.",
 	"keywords": [
 		"jquery",
 		"TabaKordion",
 		"plugins",
 		"tabs",
 		"accordion",
+		"show hide",
+		"show/hide",
 		"accessible",
 		"WAI",
 		"ARIA"
 	],
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"author": {
 		"name": "Tariq Khan",
 		"url": "https://github.com/tariqkhan-co-uk/"
@@ -25,7 +27,7 @@
 	],
 	"bugs": "https://github.com/tariqkhan-co-uk/TabaKordion/issues",
 	"homepage": "http://www.tariqkhan.co.uk/",
-	"demo": "https://rawgit.com/tariqkhan-co-uk/TabaKordion/master/demo/index.html",
+	"demo": "https://cdn.rawgit.com/tariqkhan-co-uk/TabaKordion/master/demo/index.html",
 	"docs": "https://github.com/tariqkhan-co-uk/TabaKordion#readme",
 	"download": "https://github.com/tariqkhan-co-uk/TabaKordion/archive/master.zip",
 	"dependencies": {
