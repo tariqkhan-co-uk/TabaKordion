@@ -1,0 +1,118 @@
+@charset "UTF-8";
+/*ACCORDION*/
+.accordion .tab {
+	margin:0;
+	cursor:pointer;
+	background:#CCC;
+	border:1px solid #000;
+}
+.accordion .tab:before {
+	top:-1px;
+	height:10px;
+	content:"+";
+	margin:0 5px;
+	position:relative;
+	padding:2px 2px 3px;
+	display:inline-block;
+	border:1px solid #000;
+	font:700 22px/8px serif;
+}
+.accordion .tab[aria-expanded="true"]:before {
+	top:-3px;
+	content:"–";
+	padding:0 3px 5px;
+}
+.accordion .tab.selected:before {
+	border-color:#FFF;
+}
+/*TABS*/	
+.tabs ul:first-child {
+	margin:0;	
+	padding:0;
+	list-style:none;
+}
+.tabs .tab {
+	float:left;
+	font-weight:700;
+	margin:0 1px 0 0;
+	text-align:center;
+	display:inline-block;
+}
+.tabs .tab a, .tabs .tab span {
+	color:#000;
+	padding:10px;
+	display:block;
+	cursor:pointer;
+	background:#CCC;
+	text-decoration:none;
+	border:1px solid #000;
+}
+.tabs .panel {
+	clear:both;
+	padding:10px;
+	display:block;
+	border:1px solid #000;
+}
+/*SHOW/HIDE*/
+.showhide {
+	color:#000;
+	display:block;
+	text-decoration:none;
+	border-bottom:1px solid #000;
+}
+.showhide:hover, .showhide:active, .showhide:focus, .showhide.selected {
+	color:#F00;
+	cursor:pointer;
+	background:none;
+	border-bottom-color:#F00;
+}
+.showhide-region:focus {
+	color:#000;
+	background:none;
+	border:1px dotted #F00;
+}
+/*GENERIC*/
+a {
+	color:#F00;
+	text-decoration:underline;
+}
+a:hover, :focus {
+	outline:0;
+	color:#FFF;
+	background:#F00;
+	text-decoration:none;
+}
+/*
+.visually-hidden {
+	top:-30em;
+	left:-300em;
+	#=position:absolute;
+}
+*/
+.accordion .tab.selected,
+.tabs .tab.selected a, .tabs .tab.selected span {
+	color:#FFF;
+	background:#000;
+}
+.accordion .tab.focus, .accordion .tab.focus:before, .accordion .tab:hover, .accordion .tab:hover:before,
+.tabs .tab.focus a, .tabs .tab a:hover, .tabs .tab.focus span, .tabs .tab span:hover {
+	color:#F00;
+	border-color:#F00;
+}
+/*EXTRA*/
+#tabs-header, #accordion-header {
+	margin-top:0;
+	padding-top:1em;
+}
+.accordion .tab {
+	padding:5px 0;
+}
+.showhide-region {
+	padding:0 0 1em;
+}
+.showhide-region p:first-child {
+	margin-top:0;
+}
+.showhide-region p:last-child {
+	margin-bottom:0;
+}
