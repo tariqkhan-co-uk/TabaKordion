@@ -94,9 +94,9 @@ The TabaKordion plugin currently has 3 key configuration options (including the 
 
 As mentioned earlier, you can call the plugin by using the following JavaScript:
 
-	```javascript
-	$("#element").TabaKordion();
-	```
+```javascript
+$("#element").TabaKordion();
+```
 
 '#element' being the 'id' attribute assigned to the wrapping 'div' element. This could also be a 'class' attribute instead of the 'id'. I find it easier to use the following instead:
 
