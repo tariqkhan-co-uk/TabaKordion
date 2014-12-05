@@ -112,15 +112,21 @@ The following is the minimum HTML mark-up required to use TabaKordion in it's de
 
 ```xhtml
 <div class="tabakordion accordion">
-	<h3 id="tab1" class="tab" aria-controls="panel1">Heading for panel one</h3>
+	<h3 id="tab1" class="tab" aria-controls="panel1">
+		Heading for panel one
+	</h3>
 	<div id="panel1" class="panel" aria-labelledby="tab1">
 		Sample content for panel one.
 	</div>
-	<h3 id="tab2" class="tab" aria-controls="panel2">Heading for panel two</h3>
+	<h3 id="tab2" class="tab" aria-controls="panel2">
+		Heading for panel two
+	</h3>
 	<div id="panel2" class="panel" aria-labelledby="tab2">
 		Sample content for panel two.
 	</div>
-	<h3 id="tab3" class="tab" aria-controls="panel3">Heading for panel three</h3>
+	<h3 id="tab3" class="tab" aria-controls="panel3">
+		Heading for panel three
+	</h3>
 	<div id="panel3" class="panel" aria-labelledby="tab3">
 		Sample content for panel three.
 	</div>
@@ -151,7 +157,9 @@ To manually configure a panel to be open by default, you simply need to assign t
 
 ```xhtml
 <div class="tabakordion accordion">
-	<h3 id="tab1" class="tab selected" aria-controls="panel1">Heading for panel one</h3>
+	<h3 id="tab1" class="tab selected" aria-controls="panel1">
+		Heading for panel one
+	</h3>
 	...
 </div>
 ```
@@ -163,9 +171,15 @@ The following is the minimum HTML mark-up required to use TabaKordion as Tabs:
 ```xhtml
 <div class="tabakordion tabs">
 	<ul>
-		<li id="tab4" class="tab" aria-controls="panel4"><a href="#panel4">Heading for panel one</a></li>
-		<li id="tab5" class="tab" aria-controls="panel5"><a href="#panel5">Heading for panel two</a></li>
-		<li id="tab6" class="tab" aria-controls="panel6"><a href="#panel6">Heading for panel three</a></li>
+		<li id="tab4" class="tab" aria-controls="panel4">
+			<a href="#panel4">Heading for panel one</a>
+		</li>
+		<li id="tab5" class="tab" aria-controls="panel5">
+			<a href="#panel5">Heading for panel two</a>
+		</li>
+		<li id="tab6" class="tab" aria-controls="panel6">
+			<a href="#panel6">Heading for panel three</a>
+		</li>
 	</ul>
 	<div id="panel4" class="panel" aria-labelledby="tab4">
 		Sample content for panel one.
@@ -192,7 +206,9 @@ To manually configure a panel to be open by default, you simply need to assign t
 ```xhtml
 <div class="tabakordion tabs">
 	<ul>
-		<li id="tab4" class="tab selected" aria-controls="panel4"><a href="#panel4">Heading for panel one</a></li>
+		<li id="tab4" class="tab selected" aria-controls="panel4">
+			<a href="#panel4">Heading for panel one</a>
+		</li>
 		...
 </div>
 ```
@@ -202,7 +218,9 @@ To manually configure a panel to be open by default, you simply need to assign t
 The following is the minimum HTML mark-up required to use TabaKordion as show/hide region:
 
 ```xhtml
-<a href="#showhide-region" id="showhide" class="tabakordion showhide">Sample text</a>
+<a href="#showhide-region" id="showhide" class="tabakordion showhide">
+	Sample text
+</a>
 <div id="showhide-region">
 	<p>Sample content</p>
 </div>
