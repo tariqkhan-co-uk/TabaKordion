@@ -100,9 +100,9 @@ $("#element").TabaKordion();
 
 '#element' being the 'id' attribute assigned to the wrapping 'div' element. This could also be a 'class' attribute instead of the 'id'. I find it easier to use the following instead:
 
-	```javascript
-	$(".TabaKordion").TabaKordion();
-	```
+```javascript
+$(".TabaKordion").TabaKordion();
+```
 
 This way, any time you wish to use the plugin, you can assign the 'TabaKordion' class to the wrapping 'div' element.
 
@@ -110,22 +110,22 @@ This way, any time you wish to use the plugin, you can assign the 'TabaKordion' 
 
 The following is the minimum HTML mark-up required to use TabaKordion in it's default configuration, which is as an Accordion:
 
-	```xhtml
-	<div class="tabakordion accordion">
-		<h3 id="tab1" class="tab" aria-controls="panel1">Heading for panel one</h3>
-		<div id="panel1" class="panel" aria-labelledby="tab1">
-			Sample content for panel one.
-		</div>
-		<h3 id="tab2" class="tab" aria-controls="panel2">Heading for panel two</h3>
-		<div id="panel2" class="panel" aria-labelledby="tab2">
-			Sample content for panel two.
-		</div>
-		<h3 id="tab3" class="tab" aria-controls="panel3">Heading for panel three</h3>
-		<div id="panel3" class="panel" aria-labelledby="tab3">
-			Sample content for panel three.
-		</div>
+```xhtml
+<div class="tabakordion accordion">
+	<h3 id="tab1" class="tab" aria-controls="panel1">Heading for panel one</h3>
+	<div id="panel1" class="panel" aria-labelledby="tab1">
+		Sample content for panel one.
 	</div>
-	```
+	<h3 id="tab2" class="tab" aria-controls="panel2">Heading for panel two</h3>
+	<div id="panel2" class="panel" aria-labelledby="tab2">
+		Sample content for panel two.
+	</div>
+	<h3 id="tab3" class="tab" aria-controls="panel3">Heading for panel three</h3>
+	<div id="panel3" class="panel" aria-labelledby="tab3">
+		Sample content for panel three.
+	</div>
+</div>
+```
 
 The class 'accordion' assigned to the wrapping 'div' element is not required and is used purely for styling.
 
@@ -137,11 +137,11 @@ The above uses no configuration and the plugin will be functioning in it's defau
 
 The default behaviour of the accordion is to allow having multiple panels open simultaneously. This is as per WAI requirements. Websites commonly use an accordion where only 1 panel is open at any time. Clicking on the heading for a closed panel will close the currently open panel then open the selected panel. This can be achieved by assigning the 'nomultiselect' class to the wrapping 'div' element.
 
-	```xhtml
-	<div class="tabakordion accordion nomultiselect">
-		...
-	</div>
-	```
+```xhtml
+<div class="tabakordion accordion nomultiselect">
+	...
+</div>
+```
 
 #### 1.2 Preselected panel
 
@@ -149,35 +149,35 @@ The first panel will be open by default when the page loads. If the URL contains
 
 To manually configure a panel to be open by default, you simply need to assign the 'selected' class on the panel header.
 
-	```xhtml
-	<div class="tabakordion accordion">
-		<h3 id="tab1" class="tab selected" aria-controls="panel1">Heading for panel one</h3>
-		...
-	</div>
-	```
+```xhtml
+<div class="tabakordion accordion">
+	<h3 id="tab1" class="tab selected" aria-controls="panel1">Heading for panel one</h3>
+	...
+</div>
+```
 
 #### 2. Tabs
 
 The following is the minimum HTML mark-up required to use TabaKordion as Tabs:
 
-	```xhtml
-	<div class="tabakordion tabs">
-		<ul>
-			<li id="tab4" class="tab" aria-controls="panel4"><a href="#panel4">Heading for panel one</a></li>
-			<li id="tab5" class="tab" aria-controls="panel5"><a href="#panel5">Heading for panel two</a></li>
-			<li id="tab6" class="tab" aria-controls="panel6"><a href="#panel6">Heading for panel three</a></li>
-		</ul>
-		<div id="panel4" class="panel" aria-labelledby="tab4">
-			Sample content for panel one.
-		</div>
-		<div id="panel5" class="panel" aria-labelledby="tab5">
-			Sample content for panel two.
-		</div>
-		<div id="panel6" class="panel" aria-labelledby="tab6">
-			Sample content for panel three.
-		</div>
+```xhtml
+<div class="tabakordion tabs">
+	<ul>
+		<li id="tab4" class="tab" aria-controls="panel4"><a href="#panel4">Heading for panel one</a></li>
+		<li id="tab5" class="tab" aria-controls="panel5"><a href="#panel5">Heading for panel two</a></li>
+		<li id="tab6" class="tab" aria-controls="panel6"><a href="#panel6">Heading for panel three</a></li>
+	</ul>
+	<div id="panel4" class="panel" aria-labelledby="tab4">
+		Sample content for panel one.
 	</div>
-	```
+	<div id="panel5" class="panel" aria-labelledby="tab5">
+		Sample content for panel two.
+	</div>
+	<div id="panel6" class="panel" aria-labelledby="tab6">
+		Sample content for panel three.
+	</div>
+</div>
+```
 
 The class 'tabs' assigned to the wrapping 'div' element is required both for styling and to configure the TabaKordion plugin to function as Tabs.
 
@@ -189,24 +189,24 @@ The first panel will be open by default when the page loads. If the URL contains
 
 To manually configure a panel to be open by default, you simply need to assign the 'selected' class on the panel header.
 
-	```xhtml
-	<div class="tabakordion tabs">
-		<ul>
-			<li id="tab4" class="tab selected" aria-controls="panel4"><a href="#panel4">Heading for panel one</a></li>
-			...
-	</div>
-	```
+```xhtml
+<div class="tabakordion tabs">
+	<ul>
+		<li id="tab4" class="tab selected" aria-controls="panel4"><a href="#panel4">Heading for panel one</a></li>
+		...
+</div>
+```
 
 #### 2. Show/hide region
 
 The following is the minimum HTML mark-up required to use TabaKordion as show/hide region:
 
-	```xhtml
-	<a href="#showhide-region" id="showhide" class="tabakordion showhide">Sample text</a>
-	<div id="showhide-region">
-		<p>Sample content</p>
-	</div>
-	```
+```xhtml
+<a href="#showhide-region" id="showhide" class="tabakordion showhide">Sample text</a>
+<div id="showhide-region">
+	<p>Sample content</p>
+</div>
+```
 
 The class 'showhide' assigned to the wrapping 'div' element is required both for styling and to configure the TabaKordion plugin to function as show/hide region.
 
