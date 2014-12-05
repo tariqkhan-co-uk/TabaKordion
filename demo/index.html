@@ -12,17 +12,17 @@
 <body>
 	<h1>TabaKordion</h1>
 	<p>A fully accessible to WAI specification; tabs, accordion and show/hide jQuery plugin using ARIA attributes.</p>
-	<h2 id="showhide-header">Show and hide regions</h2>
-	<p><a href="#showhide-region1" id="showhide1" class="tabakordion showhide">Description</a></p>
+	<h2 id="showhide">Show and hide regions</h2>
+	<p><a href="#showhide-region1" class="tabakordion showhide">Description</a></p>
 	<div id="showhide-region1">
 		<p><a href=".">Simple example</a> of hiding and showing regions using aria-expanded. aria-controls is used to maintain <a href=".">markup</a> associations.</p>
 	</div>
-	<p><a href="#showhide-region2" id="showhide2" class="tabakordion showhide">Keyboard Support</a></p>
+	<p><a href="#showhide-region2" class="tabakordion showhide">Keyboard Support</a></p>
 	<div id="showhide-region2">
-		<p>Tab: Move between triggers. Enter or space: <a href=".">Toggle display</a> of hide/show regions.</p>
+		<p>Tab: Move between triggers. Enter or space: <a href="." id="toggle">Toggle display</a> of hide/show regions.</p>
 	</div>
-	<h2 id="accordion-header">Accordion</h2>
-	<div id="accordion" class="tabakordion accordion" role="tablist">
+	<h2 id="accordion">Accordion</h2>
+	<div class="tabakordion accordion">
 		<h3 id="tab1" class="tab" aria-controls="panel1">Description</h3>
 		<div id="panel1" class="panel" aria-labelledby="tab1">
 			<p>An accordion component is a collection of expandable panels associated with a common outer container. Panels consist of a header and an associated content region or panel. The primary use of an Accordion is to present multiple sections of content on a single page without scrolling, where all of the sections are peers in the application or object hierarchy. The general look is similar to a tree where each root tree node is an expandable accordion header. The user navigates and makes the contents of each panel visible (or not) by interacting with the Accordion Header. Terms for understanding accordions include:</p>
@@ -45,7 +45,7 @@
 							If interactive glyphs or menus are present in the accordion header, focus moves to each in order.
 						</li>
 						<li>
-							When the corresponding panel is expanded (its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-expanded"><code>aria-expanded</code></a> state is 'true'), then focus moves to the first focusable element in the panel.
+							When the corresponding panel is expanded (its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-expanded" id="aria-expanded"><code>aria-expanded</code></a> state is 'true'), then focus moves to the first focusable element in the panel.
 						</li>
 						<li>
 							If the panel is collapsed (its aria-expanded state is 'false' or missing), OR, when the last interactive element of a panel is reached, the next <kbd>Tab</kbd> key press moves focus as follows:
@@ -169,9 +169,9 @@
 			</ul>
 		</div>
 	</div>
-	<h2 id="tabs-header">Tabs</h2>
-	<div id="tabs" class="tabakordion tabs">
-		<ul class="tablist" role="tablist">
+	<h2 id="tabs">Tabs</h2>
+	<div class="tabakordion tabs">
+		<ul>
 			<li id="tab4" class="tab" aria-controls="panel4"><a href="#panel4">Description</a></li>
 			<li id="tab5" class="tab" aria-controls="panel5"><a href="#panel5">Keyboard Interaction</a></li>
 			<li id="tab6" class="tab" aria-controls="panel6"><a href="#panel6">WAI-ARIA Roles, States, and Properties</a></li>
@@ -226,7 +226,7 @@
 			<h3>WAI-ARIA Roles, States, and Properties</h3>
 			<ul>
 				<li>The tabbed interface component contains tabs and their associated content panels.</li>
-				<li>The content panel uses the role <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tabpanel"><code>tabpanel</code></a>.</li>
+				<li>The content panel uses the role <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tabpanel" id="tabpanel"><code>tabpanel</code></a>.</li>
 				<li>An element with role <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tab"><code>tab</code></a> is used as a grouping label, providing a link for selecting the tabpanel to be rendered to the user.</li>
 				<li>Assign the <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-controls"><code>aria-controls</code></a> relationship of a tab to the ID of its tabpanel.</li>
 				<li>Authors manage the selected state of each tab by maintaining its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-selected"><code>aria-selected</code></a> state.</li>
