@@ -48,7 +48,7 @@
 		this.right		= 39;
 		this.down		= 40;
 	}
-	$.extend($.expr[':'], { // focusable: jQuery ext. to add :focusable selector to get all focusable elements in a panel; credit to ajpiano on jQuery forums
+	$.extend($.expr[':'], {
 		focusable: function(element) {
 			var	nodeName = element.nodeName.toLowerCase(),
 				tabIndex = $(element).attr('tabindex');
@@ -76,29 +76,50 @@
 				this.$panels.attr('role', 'tabpanel').attr('aria-hidden', 'true').hide();
 				this.$tabs.attr('role', 'tab').attr('aria-selected', 'false').attr('tabindex', '-1');
 				if(this.options.accordion) {
+					this.$TabaKordion.attr('role', 'tablist');
 					if(this.options.multiSelect) {
 						this.$TabaKordion.attr('multiselectable', true);
 					}
 					this.$tabs.attr('aria-expanded', 'false').append(' <span class="visually-hidden">(collapsed)</span>');
 				} else {
+					this.$TabaKordion.find('ul:first-child').attr('role', 'tablist');
 					this.$tabs.find('a').each(function() {
 						$(this).replaceWith('<span>'+$(this).text()+'</span>');
 					});
 				}
 			}
-			var anchor = window.location.hash;
-			if(anchor && $(anchor).length) {
-				this.$tabs.removeClass('selected');
-				$(anchor).addClass('selected');
-				if(this.options.showHide) {
+			var $tab, $found = false, anchor = window.location.hash;
+			if(anchor) {
+				anchor = anchor.substring(1);
+				if(this.options.showHide && (this.$tabs.attr('id') == anchor || this.$panels.attr('id') == anchor || this.$panels.find('#'+anchor).length)) {
+					this.toggleRegion();
+				} else if(this.$TabaKordion.find(anchor).length) {
 					anchor = anchor.substring(1);
-					if(this.$tabs.attr('id') === anchor || this.$panels.attr('id') === anchor) {
-						this.toggleRegion();
+					this.$tabs.removeClass('selected');
+					this.$tabs.each(function() {
+						if($(this).attr('id') == anchor) {
+							$found = $(this);
+							return false;
+						}
+					});
+					if($found === false) {
+						this.$panels.each(function() {
+							if($(this).attr('id') == anchor) {
+								$found = $('#'+$(this).attr('aria-labelledby'));
+								return false;
+							}
+						});
+					}
+					if($found === false) {
+						$found = $('#'+$('#'+anchor).parents('.panel').attr('aria-labelledby'));
+					}
+					if($found !== false) {
+						$found.addClass('selected');
 					}
 				}
 			}
 			if(!this.options.showHide) {
-				var $tab = this.$tabs.filter('.selected');
+				$tab = this.$tabs.filter('.selected');
 				if(!$tab.length && this.options.openFirst) {
 					$tab = this.$tabs.first();
 				}
