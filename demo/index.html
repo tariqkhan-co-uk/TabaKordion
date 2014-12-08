@@ -5,240 +5,257 @@
 	<meta charset="utf-8" />
 	<meta name="author" content="Tariq Khan - www.tariqkhan.co.uk" />
 	<meta name="description" content="A fully accessible to WAI specification; tabs, accordion and show/hide jQuery plugin using ARIA attributes." />
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-	<script src="../src/jquery.TabaKordion.js"></script>
-	<link rel="stylesheet" type="text/css" media="all" href="../css/style.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="../css/monotone.css" />
 </head>
 <body>
-	<h1>TabaKordion</h1>
-	<p>A fully accessible to WAI specification; tabs, accordion and show/hide jQuery plugin using ARIA attributes.</p>
-	<h2 id="showhide">Show and hide regions</h2>
-	<p><a href="#showhide-region1" id="showhide1" class="tabakordion showhide">Description</a></p>
-	<div id="showhide-region1">
-		<p><a href=".">Simple example</a> of hiding and showing regions using aria-expanded. aria-controls is used to maintain <a href=".">markup</a> associations.</p>
+	<div class="header">
+		<header>
+			<h1>TabaKordion</h1>
+			<img src="https://cloud.githubusercontent.com/assets/10047797/5343964/c54e4d14-7f02-11e4-85fb-773c201a987e.png" alt="TabaKordion" />
+			<p>A fully accessible to WAI specification; tabs, accordion and show/hide jQuery plugin using ARIA attributes.</p>
+		</header>
 	</div>
-	<p><a href="#showhide-region2" id="showhide2" class="tabakordion showhide">Keyboard Support</a></p>
-	<div id="showhide-region2">
-		<p>Tab: Move between triggers. Enter or space: <a href="." id="toggle">Toggle display</a> of hide/show regions.</p>
+	<div class="section">
+		<section>
+			<h2 id="showhide">Show and hide regions</h2>
+			<a href="#showhide-region1" id="showhide1" class="tabakordion showhide">Description</a>
+			<div id="showhide-region1">
+				<p><a href=".">Simple example</a> of hiding and showing regions using aria-expanded. aria-controls is used to maintain <a href=".">markup</a> associations.</p>
+			</div>
+			<a href="#showhide-region2" id="showhide2" class="tabakordion showhide">Keyboard Support</a>
+			<div id="showhide-region2">
+				<p>Tab: Move between triggers. Enter or space: <a href="." id="toggle">Toggle display</a> of hide/show regions.</p>
+			</div>
+		</section>
 	</div>
-	<h2 id="accordion">Accordion</h2>
-	<div class="tabakordion accordion">
-		<h3 id="tab1" class="tab" aria-controls="panel1">Description</h3>
-		<div id="panel1" class="panel" aria-labelledby="tab1">
-			<p>An accordion component is a collection of expandable panels associated with a common outer container. Panels consist of a header and an associated content region or panel. The primary use of an Accordion is to present multiple sections of content on a single page without scrolling, where all of the sections are peers in the application or object hierarchy. The general look is similar to a tree where each root tree node is an expandable accordion header. The user navigates and makes the contents of each panel visible (or not) by interacting with the Accordion Header. Terms for understanding accordions include:</p>
-			<dl>
-				<dt>accordion component:</dt>
-				<dd>Collection of panels within a common outer pane.</dd>
-				<dt>accordion header:</dt>
-				<dd>Label area of an accordion panel. This is where you find the control to expand or collapse the panels.</dd>
-				<dt>accordion panel:</dt>
-				<dd>Contents area associated with an accordion header.</dd>
-			</dl>
-		</div>
-		<h3 id="tab2" class="tab" aria-controls="panel2">Keyboard Interaction</h3>
-		<div id="panel2" class="panel" aria-labelledby="tab2">
-			<ul>
-				<li>
-					<kbd>Tab</kbd> - When focus is on an accordion header, pressing the <kbd>Tab</kbd> key moves focus in the following manner:
-					<ol>
+	<div class="section">
+		<section>
+			<h2 id="accordion">Accordion</h2>
+			<div class="tabakordion accordion">
+				<h3 id="tab1" class="tab" aria-controls="panel1">Description</h3>
+				<div id="panel1" class="panel" aria-labelledby="tab1">
+					<p>An accordion component is a collection of expandable panels associated with a common outer container. Panels consist of a header and an associated content region or panel. The primary use of an Accordion is to present multiple sections of content on a single page without scrolling, where all of the sections are peers in the application or object hierarchy. The general look is similar to a tree where each root tree node is an expandable accordion header. The user navigates and makes the contents of each panel visible (or not) by interacting with the Accordion Header. Terms for understanding accordions include:</p>
+					<dl>
+						<dt>accordion component</dt>
+						<dd>Collection of panels within a common outer pane.</dd>
+						<dt>accordion header</dt>
+						<dd>Label area of an accordion panel. This is where you find the control to expand or collapse the panels.</dd>
+						<dt>accordion panel</dt>
+						<dd>Contents area associated with an accordion header.</dd>
+					</dl>
+				</div>
+				<h3 id="tab2" class="tab" aria-controls="panel2">Keyboard Interaction</h3>
+				<div id="panel2" class="panel" aria-labelledby="tab2">
+					<ul>
 						<li>
-							If interactive glyphs or menus are present in the accordion header, focus moves to each in order.
+							<kbd>Tab</kbd> - When focus is on an accordion header, pressing the <kbd>Tab</kbd> key moves focus in the following manner:
+							<ol>
+								<li>
+									If interactive glyphs or menus are present in the accordion header, focus moves to each in order.
+								</li>
+								<li>
+									When the corresponding panel is expanded (its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-expanded" id="aria-expanded"><code>aria-expanded</code></a> state is 'true'), then focus moves to the first focusable element in the panel.
+								</li>
+								<li>
+									If the panel is collapsed (its aria-expanded state is 'false' or missing), OR, when the last interactive element of a panel is reached, the next <kbd>Tab</kbd> key press moves focus as follows:
+									<ul>
+										<li>If a subsequent accordion panel is already expanded, focus moves to the first focusable element in this subsequent panel.</li>
+										<li>If no subsequent accordion panel is expanded, focus moves to the first focusable element outside the accordion component.</li>
+									</ul>
+								</li>
+							</ol>
 						</li>
 						<li>
-							When the corresponding panel is expanded (its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-expanded" id="aria-expanded"><code>aria-expanded</code></a> state is 'true'), then focus moves to the first focusable element in the panel.
-						</li>
-						<li>
-							If the panel is collapsed (its aria-expanded state is 'false' or missing), OR, when the last interactive element of a panel is reached, the next <kbd>Tab</kbd> key press moves focus as follows:
+							<kbd>Left arrow</kbd>
 							<ul>
-								<li>If a subsequent accordion panel is already expanded, focus moves to the first focusable element in this subsequent panel.</li>
-								<li>If no subsequent accordion panel is expanded, focus moves to the first focusable element outside the accordion component.</li>
+								<li>When focus is on the accordion header, a press of up/left arrow keys moves focus to the previous logical accordion header.</li>
+								<li>
+									When focus reaches the first header, further up/left arrow key presses optionally wrap to the first header.
+								</li>
 							</ul>
 						</li>
-					</ol>
-				</li>
-				<li>
-					<kbd>Left arrow</kbd>
-					<ul>
-						<li>When focus is on the accordion header, a press of up/left arrow keys moves focus to the previous logical accordion header.</li>
 						<li>
-							When focus reaches the first header, further up/left arrow key presses optionally wrap to the first header.
+							<kbd>Right arrow</kbd>
+							<ul>
+								<li>
+									When focus is on the accordion header, a press of down/right moves focus to the next logical accordion header.
+								</li>
+								<li>
+									When focus reaches the last header, further down/right arrow key presses optionally wrap to the first header
+								</li>
+							</ul>
+						</li>
+						<li>
+							<kbd>Up arrow</kbd> - behaves the same as left arrow
+						</li>
+						<li>
+							<kbd>Down arrow</kbd> - behaves the same as right arrow
+						</li>
+						<li>
+							<kbd>Control+Up arrow</kbd> - Moves focus from anywhere in the accordion content to its associated accordion header or tab respectively.
+						</li>
+						<li>
+							<kbd>Control+PageUp</kbd> -
+							<ul>
+								<li>
+									When focus is inside of an accordion pane, pressing <kbd>Control+PageUp</kbd> moves focus to the accordion header of the previous accordion pane.
+								</li>
+								<li>
+									When focus is in the first accordion header content, pressing <kbd>Control+PageUp</kbd> optionally moves focus to the last accordion header.
+								</li>
+								<li>
+									Focus will simply move to the header and will require <kbd>Enter/Space</kbd> to expand/collapse the accordion pane. 
+								</li>
+							</ul>
+						</li>
+						<li>
+							<kbd>Control+PageDown</kbd> -
+							<ul>
+								<li>
+									When focus is inside of an accordion pane, pressing <kbd>Control+PageDown</kbd> moves focus to the header of the accordion pane.
+								</li>
+								<li>
+									When focus is in the last accordion header content, pressing <kbd>Control+PageDown</kbd> optionally moves focus to the first accordion header.
+								</li>
+								<li>
+									In the case of an accordion, focus simply moves to the header and requires <kbd>Enter</kbd>/<kbd>Space</kbd> to expand/collapse the accordion pane.
+								</li>
+							</ul>
+						</li>
+						<li>
+							<kbd>End</kbd> - When focus is on the accordion header, an <kbd>End</kbd> key press moves  focus to the last accordion header.
+						</li>
+						<li>
+							<kbd>Home</kbd> - When focus is on the accordion header, a <kbd>Home</kbd> key press moves focus to the first accordion header.
+						</li>
+						<li>
+							<kbd>Enter/Space</kbd> - When focus is on an accordion header, pressing <kbd>Enter</kbd>/<kbd>Space</kbd> toggles the expansion of the corresponding panel.
+							<ul>
+								<li>
+									If collapsed, the panel is expanded, and its aria-expanded state is set to 'true'.
+								</li>
+								<li>
+									If expanded, the panel is collapsed and its aria-expanded state is set to 'false'.
+								</li>
+							</ul>
+						</li>
+						<li>
+							<kbd>Shift+Tab</kbd> - Generally the reverse of <kbd>Tab</kbd>.
+						</li>
+						<li>
+							<kbd>Alt+Delete</kbd> -
+							<ul>
+								<li>
+									When deletion is allowed, with focus anywhere within the tab panel or tab, pressing <kbd>Alt+Delete</kbd> will delete the current tab and tab panel from the tabbed interface control. If additional tabs remain in the tabbed interface, focus goes to the next tab in the tab list. If no additional tabs remain, then focus moves to the last place that held focus in the previous tab panel.
+								</li>
+								<li>
+									An alternative to providing a keystroke to close a tab is to provide a context menu that is associated with the tab title. When focus is on the tab, pressing <kbd>Shift-F10</kbd> or pressing the right mouse button will open a context menu with the close choice.
+								</li>
+								<li>
+									A warning should be given to the user before allowing the delete to occur.
+								</li>
+							</ul>
 						</li>
 					</ul>
-				</li>
-				<li>
-					<kbd>Right arrow</kbd>
+					<p>In Firefox, pressing <kbd>Control+PageUp</kbd> / <kbd>Control+PageDown</kbd> moves between browser tabs. Firefox also supports <kbd>Control+Tab</kbd> and <kbd>Control+Shift+Tab</kbd> to move between tabs. Internet Explorer 7 also uses <kbd>Control+Tab</kbd> and <kbd>Control+Shift+Tab</kbd>. There may be advantages to using <kbd>Control+PageUp</kbd>/<kbd>PageDown</kbd> as the keys to change tabs because it is a recognizable keystroke to at least Firefox users and it is also supported by the Windows operating system to move between panels in a tabbed dialog.</p>
+					<p>You should be aware of two issues with using <kbd>Control+PageUp</kbd>/<kbd>PageDown</kbd>:</p>
 					<ul>
-						<li>
-							When focus is on the accordion header, a press of down/right moves focus to the next logical accordion header.
-						</li>
-						<li>
-							When focus reaches the last header, further down/right arrow key presses optionally wrap to the first header
-						</li>
+						<li>The first arises when the user is within a tabbed interface control on a Web page. Here they can not easily switch browser tabs without first moving focus outside of the tabbed interface control. This may be acceptable.</li>
+						<li>The second arises when the entire web page is a tabbed interface control. In this case the user could not switch browser tabs unless the control on the web page ignored the <kbd>Control+PageUp</kbd>/<kbd>PageDown</kbd> keypress (and thus letting the browser access it) when   the first or last tab was reached.</li>
 					</ul>
-				</li>
-				<li>
-					<kbd>Up arrow</kbd> - behaves the same as left arrow
-				</li>
-				<li>
-					<kbd>Down arrow</kbd> - behaves the same as right arrow
-				</li>
-				<li>
-					<kbd>Control+Up arrow</kbd> - Moves focus from anywhere in the accordion content to its associated accordion header or tab respectively.
-				</li>
-				<li>
-					<kbd>Control+PageUp</kbd> -
+				</div>
+				<h3 id="tab3" class="tab" aria-controls="panel3">WAI-ARIA Roles, States, and Properties</h3>
+				<div id="panel3" class="panel" aria-labelledby="tab3">
 					<ul>
-						<li>
-							When focus is inside of an accordion pane, pressing <kbd>Control+PageUp</kbd> moves focus to the accordion header of the previous accordion pane.
-						</li>
-						<li>
-							When focus is in the first accordion header content, pressing <kbd>Control+PageUp</kbd> optionally moves focus to the last accordion header.
-						</li>
-						<li>
-							Focus will simply move to the header and will require <kbd>Enter/Space</kbd> to expand/collapse the accordion pane. 
-						</li>
+						<li>The accordion component must have a role of <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tablist"><code>tablist</code></a> and have <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-multiselectable"><code>aria-multiselectable</code></a>="true" This will enable an assistive technology, such as   screen reader, to convey that the tablist is an accordion or a multiselectable tablist. This will also tell the user that the keyboard navigation matches an   accordion and not a tablist.</li>
+						<li>Contained within the tablist is a set of tab/tabpanel pairs.</li>
+						<li>Each header tab in the tablist has a role of <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tab"><code>tab</code></a>.</li>
+						<li>The accordion panel uses the role <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tabpanel"><code>tabpanel</code></a> and should have an <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-labelledby"><code>aria-labelledby</code></a> relationship referencing the correponding header having a role of <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tab"><code>tab</code></a></li>
+						<li>The tabpanel is considered a grouping for all content consisting of that tabpanel.</li>
+						<li>An accordion should manage the expanded/collapsed state of each tab by maintain its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-expanded"><code>aria-expanded</code></a> state.</li>
+						<li>An accordion should manage the selected state of each tab by maintaining its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-selected"><code>aria-selected</code></a> state.</li>
+						<li>An accordion should convey the visibility of each tabpanel by maintaining its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-hidden" class="state-reference"><code>aria-hidden</code></a> state.</li>
 					</ul>
-				</li>
-				<li>
-					<kbd>Control+PageDown</kbd> -
-					<ul>
-						<li>
-							When focus is inside of an accordion pane, pressing <kbd>Control+PageDown</kbd> moves focus to the header of the accordion pane.
-						</li>
-						<li>
-							When focus is in the last accordion header content, pressing <kbd>Control+PageDown</kbd> optionally moves focus to the first accordion header.
-						</li>
-						<li>
-							In the case of an accordion, focus simply moves to the header and requires <kbd>Enter</kbd>/<kbd>Space</kbd> to expand/collapse the accordion pane.
-						</li>
-					</ul>
-				</li>
-				<li>
-					<kbd>End</kbd> - When focus is on the accordion header, an <kbd>End</kbd> key press moves  focus to the last accordion header.
-				</li>
-				<li>
-					<kbd>Home</kbd> - When focus is on the accordion header, a <kbd>Home</kbd> key press moves focus to the first accordion header.
-				</li>
-				<li>
-					<kbd>Enter/Space</kbd> - When focus is on an accordion header, pressing <kbd>Enter</kbd>/<kbd>Space</kbd> toggles the expansion of the corresponding panel.
-					<ul>
-						<li>
-							If collapsed, the panel is expanded, and its aria-expanded state is set to 'true'.
-						</li>
-						<li>
-							If expanded, the panel is collapsed and its aria-expanded state is set to 'false'.
-						</li>
-					</ul>
-				</li>
-				<li>
-					<kbd>Shift+Tab</kbd> - Generally the reverse of <kbd>Tab</kbd>.
-				</li>
-				<li>
-					<kbd>Alt+Delete</kbd> -
-					<ul>
-						<li>
-							When deletion is allowed, with focus anywhere within the tab panel or tab, pressing <kbd>Alt+Delete</kbd> will delete the current tab and tab panel from the tabbed interface control. If additional tabs remain in the tabbed interface, focus goes to the next tab in the tab list. If no additional tabs remain, then focus moves to the last place that held focus in the previous tab panel.
-						</li>
-						<li>
-							An alternative to providing a keystroke to close a tab is to provide a context menu that is associated with the tab title. When focus is on the tab, pressing <kbd>Shift-F10</kbd> or pressing the right mouse button will open a context menu with the close choice.
-						</li>
-						<li>
-							A warning should be given to the user before allowing the delete to occur.
-						</li>
-					</ul>
-				</li>
-			</ul>
-			<p>In Firefox, pressing <kbd>Control+PageUp</kbd> / <kbd>Control+PageDown</kbd> moves between browser tabs. Firefox also supports <kbd>Control+Tab</kbd> and <kbd>Control+Shift+Tab</kbd> to move between tabs. Internet Explorer 7 also uses <kbd>Control+Tab</kbd> and <kbd>Control+Shift+Tab</kbd>. There may be advantages to using <kbd>Control+PageUp</kbd>/<kbd>PageDown</kbd> as the keys to change tabs because it is a recognizable keystroke to at least Firefox users and it is also supported by the Windows operating system to move between panels in a tabbed dialog.</p>
-			<p>You should be aware of two issues with using <kbd>Control+PageUp</kbd>/<kbd>PageDown</kbd>:</p>
-			<ul>
-				<li>The first arises when the user is within a tabbed interface control on a Web page. Here they can not easily switch browser tabs without first moving focus outside of the tabbed interface control. This may be acceptable.</li>
-				<li>The second arises when the entire web page is a tabbed interface control. In this case the user could not switch browser tabs unless the control on the web page ignored the <kbd>Control+PageUp</kbd>/<kbd>PageDown</kbd> keypress (and thus letting the browser access it) when   the first or last tab was reached.</li>
-			</ul>
-		</div>
-		<h3 id="tab3" class="tab" aria-controls="panel3">WAI-ARIA Roles, States, and Properties</h3>
-		<div id="panel3" class="panel" aria-labelledby="tab3">
-			<ul>
-				<li>The accordion component must have a role of <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tablist"><code>tablist</code></a> and have <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-multiselectable"><code>aria-multiselectable</code></a>="true" This will enable an assistive technology, such as   screen reader, to convey that the tablist is an accordion or a multiselectable tablist. This will also tell the user that the keyboard navigation matches an   accordion and not a tablist.</li>
-				<li>Contained within the tablist is a set of tab/tabpanel pairs.</li>
-				<li>Each header tab in the tablist has a role of <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tab"><code>tab</code></a>.</li>
-				<li>The accordion panel uses the role <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tabpanel"><code>tabpanel</code></a> and should have an <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-labelledby"><code>aria-labelledby</code></a> relationship referencing the correponding header having a role of <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tab"><code>tab</code></a></li>
-				<li>The tabpanel is considered a grouping for all content consisting of that tabpanel.</li>
-				<li>An accordion should manage the expanded/collapsed state of each tab by maintain its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-expanded"><code>aria-expanded</code></a> state.</li>
-				<li>An accordion should manage the selected state of each tab by maintaining its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-selected"><code>aria-selected</code></a> state.</li>
-				<li>An accordion should convey the visibility of each tabpanel by maintaining its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-hidden" class="state-reference"><code>aria-hidden</code></a> state.</li>
-			</ul>
-		</div>
+				</div>
+			</div>
+		</section>
 	</div>
-	<h2 id="tabs">Tabs</h2>
-	<div class="tabakordion tabs">
-		<ul>
-			<li id="tab4" class="tab" aria-controls="panel4"><a href="#panel4">Description</a></li>
-			<li id="tab5" class="tab" aria-controls="panel5"><a href="#panel5">Keyboard Interaction</a></li>
-			<li id="tab6" class="tab" aria-controls="panel6"><a href="#panel6">WAI-ARIA Roles, States, and Properties</a></li>
-		</ul>
-		<div id="panel4" class="panel" aria-labelledby="tab4">
-			<h3>Description</h3>
-			<p>A tabbed interface component is a container for resources associated with a tab. It is a set of layered pages where only one page is displayed at a time. The general look is similar to a file folder with a "tab" that contains the title of the folder. The tabs are arranged along one of the edges of the contents but most commonly are found at the top of the page. The user navigates and makes the contents of each page visible by interacting with the title "tab" of the page. Sometimes referred to as a tab container or tab panel. Terms for understanding Tab Panels include:</p>
-			<dl>
-				<dt>tabbed interface component</dt>
-				<dd>a set of tabs and associated tab panels</dd>
-				<dt>tab panel</dt>
-				<dd>contents area that is associated with a tab</dd>
-				<dt>tab</dt>
-				<dd>the label/title area of the tab panel. This is where you click to activate a tab panel</dd>
-				<dt>tablist</dt>
-				<dd>the set of tabs</dd>
-			</dl>
-			<p>When the user activates a tab, the contents of the corresponding tab panel is made visible. The tab is considered "active". The tab remains active until another tab is activated. The active tab is placed into the tab order. Only the active tab should be in the tab order. A default tab is specified that is active when the tabbed interface component is initialized. A collection of tabs and their associated tab panels is a complex widget, because it performs show/hide actions as well as moving the user's point of regard around within the content.</p>
-		</div>
-		<div id="panel5" class="panel" aria-labelledby="tab5">
-			<h3>Keyboard Interaction</h3>
-			<ul>
-				<li>
-					<kbd>Tab</kbd> - only the active tab is in the tab order. The user reaches the tabbed panel component by pressing the tab key until the active tab title  receives focus.
-				</li>
-				<li>
-					<kbd>Left Arrow</kbd> - with focus on a tab, pressing the left arrow will move focus to the previous tab in the tab list and activate that tab. Pressing the left arrow when the focus is on the first tab in the tab list will move  focus and activate the last tab in the list.
-				</li>
-				<li>
-					<kbd>Right Arrow</kbd> - with focus on a tab, pressing the right arrow will move focus to the next tab in the tab list and activate that tab. Pressing the right arrow when the focus is on the last tab in the tab list will move focus to and activate the first tab in the list.
-				</li>
-				<li>
-					<kbd>Up arrow</kbd> - behaves the same as left arrow in order to support vertical tabs
-				</li>
-				<li>
-					<kbd>Down arrow</kbd> - behaves the same as right arrow in order to support vertical tabs
-				</li>
-				<li>
-					<kbd>Control+Up Arrow</kbd> - with focus anywhere within the tab panel, pressing <kbd>Control+Up Arrow</kbd> will move focus to the tab for that panel. This is not standard behavior - is this something we want to implement? Is it necessary if we provide a mechanism to change the active tab? Similar to <kbd>Control+PageUp</kbd>/<kbd>Control+PageDown</kbd> in  Firefox to switch tabs?
-				</li>
-				<li>
-					<kbd>Control+PageUp</kbd> - When focus is inside of a tab panel, pressing <kbd>Control+PageUp</kbd> moves focus  to the tab of the previous tab in the tab list and activates that tab.  When focus is in the first tab panel in the tab list, pressing <kbd>Control+PageUp</kbd> will move focus to the last tab in the tab list and  activate that tab.
-				</li>
-				<li>
-					<kbd>Control+PageDown</kbd> When focus is inside of a tab panel, pressing <kbd>Control+PageDown</kbd> moves focus to the tab of the next tab in the tab list and activates that  tab. When focus is in the last tab panel in the tab list, pressing  <kbd>Control+PageUp</kbd>will move focus to the first tab in the tab list and  activate that tab.
-				</li>
-			</ul>
-			<p>Regarding <kbd>Control+PageUp</kbd>/<kbd>Control+PageDown</kbd>. This is currently implemented in Firefox to move  between browser tabs. Firefox also supports <kbd>Control+Tab</kbd> and <kbd>Control+Shift+Tab</kbd> to move between tabs. Internet Explorer 7 also uses <kbd>Control+Tab</kbd> and <kbd>Control+Shift+Tab</kbd>. There may be advantages to using <kbd>Control+PageUp</kbd>/<kbd>Control+PageDown</kbd> as the keys to change tabs since it is a recognizable keystroke to at  least Firefox users and is also supported by the Windows operating  system to move between panels in a tabbed dialog. The problem is that  if the user is within a tabbed interface control on a Web page, they  can not easily switch browser tabs without first moving focus outside  of the tabbed interface control. This may be acceptable. The other  issue is if the entire Web page is a tabbed interface control - in that  case the user could not ever switch browser tabs unless the control on  the Web page ignored the <kbd>Control+PageUp</kbd>/<kbd>Control+PageDown</kbd> keypress (and thus  letting the browser access it) when the first or last tab was reached.
-			</p>
-		</div>
-		<div id="panel6" class="panel" aria-labelledby="tab6">
-			<h3>WAI-ARIA Roles, States, and Properties</h3>
-			<ul>
-				<li>The tabbed interface component contains tabs and their associated content panels.</li>
-				<li>The content panel uses the role <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tabpanel" id="tabpanel"><code>tabpanel</code></a>.</li>
-				<li>An element with role <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tab"><code>tab</code></a> is used as a grouping label, providing a link for selecting the tabpanel to be rendered to the user.</li>
-				<li>Assign the <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-controls"><code>aria-controls</code></a> relationship of a tab to the ID of its tabpanel.</li>
-				<li>Authors manage the selected state of each tab by maintaining its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-selected"><code>aria-selected</code></a> state.</li>
-				<li>A <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tablist"><code>tablist</code></a> is the container role for a set of elements with the role attribute set to <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tab"><code>tab</code></a>.</li>
-			</ul>
-		</div>
+	<div class="section">
+		<section>
+			<h2 id="tabs">Tabs</h2>
+			<div class="tabakordion tabs">
+				<ul>
+					<li id="tab4" class="tab" aria-controls="panel4"><a href="#panel4">Description</a></li>
+					<li id="tab5" class="tab" aria-controls="panel5"><a href="#panel5">Keyboard Interaction</a></li>
+					<li id="tab6" class="tab" aria-controls="panel6"><a href="#panel6">WAI-ARIA Roles, States, and Properties</a></li>
+				</ul>
+				<div id="panel4" class="panel" aria-labelledby="tab4">
+					<h3>Description</h3>
+					<p>A tabbed interface component is a container for resources associated with a tab. It is a set of layered pages where only one page is displayed at a time. The general look is similar to a file folder with a "tab" that contains the title of the folder. The tabs are arranged along one of the edges of the contents but most commonly are found at the top of the page. The user navigates and makes the contents of each page visible by interacting with the title "tab" of the page. Sometimes referred to as a tab container or tab panel. Terms for understanding Tab Panels include:</p>
+					<dl>
+						<dt>tabbed interface component</dt>
+						<dd>a set of tabs and associated tab panels</dd>
+						<dt>tab panel</dt>
+						<dd>contents area that is associated with a tab</dd>
+						<dt>tab</dt>
+						<dd>the label/title area of the tab panel. This is where you click to activate a tab panel</dd>
+						<dt>tablist</dt>
+						<dd>the set of tabs</dd>
+					</dl>
+					<p>When the user activates a tab, the contents of the corresponding tab panel is made visible. The tab is considered "active". The tab remains active until another tab is activated. The active tab is placed into the tab order. Only the active tab should be in the tab order. A default tab is specified that is active when the tabbed interface component is initialized. A collection of tabs and their associated tab panels is a complex widget, because it performs show/hide actions as well as moving the user's point of regard around within the content.</p>
+				</div>
+				<div id="panel5" class="panel" aria-labelledby="tab5">
+					<h3>Keyboard Interaction</h3>
+					<ul>
+						<li>
+							<kbd>Tab</kbd> - only the active tab is in the tab order. The user reaches the tabbed panel component by pressing the tab key until the active tab title  receives focus.
+						</li>
+						<li>
+							<kbd>Left Arrow</kbd> - with focus on a tab, pressing the left arrow will move focus to the previous tab in the tab list and activate that tab. Pressing the left arrow when the focus is on the first tab in the tab list will move  focus and activate the last tab in the list.
+						</li>
+						<li>
+							<kbd>Right Arrow</kbd> - with focus on a tab, pressing the right arrow will move focus to the next tab in the tab list and activate that tab. Pressing the right arrow when the focus is on the last tab in the tab list will move focus to and activate the first tab in the list.
+						</li>
+						<li>
+							<kbd>Up arrow</kbd> - behaves the same as left arrow in order to support vertical tabs
+						</li>
+						<li>
+							<kbd>Down arrow</kbd> - behaves the same as right arrow in order to support vertical tabs
+						</li>
+						<li>
+							<kbd>Control+Up Arrow</kbd> - with focus anywhere within the tab panel, pressing <kbd>Control+Up Arrow</kbd> will move focus to the tab for that panel. This is not standard behavior - is this something we want to implement? Is it necessary if we provide a mechanism to change the active tab? Similar to <kbd>Control+PageUp</kbd>/<kbd>Control+PageDown</kbd> in  Firefox to switch tabs?
+						</li>
+						<li>
+							<kbd>Control+PageUp</kbd> - When focus is inside of a tab panel, pressing <kbd>Control+PageUp</kbd> moves focus  to the tab of the previous tab in the tab list and activates that tab.  When focus is in the first tab panel in the tab list, pressing <kbd>Control+PageUp</kbd> will move focus to the last tab in the tab list and  activate that tab.
+						</li>
+						<li>
+							<kbd>Control+PageDown</kbd> When focus is inside of a tab panel, pressing <kbd>Control+PageDown</kbd> moves focus to the tab of the next tab in the tab list and activates that  tab. When focus is in the last tab panel in the tab list, pressing  <kbd>Control+PageUp</kbd>will move focus to the first tab in the tab list and  activate that tab.
+						</li>
+					</ul>
+					<p>Regarding <kbd>Control+PageUp</kbd>/<kbd>Control+PageDown</kbd>. This is currently implemented in Firefox to move  between browser tabs. Firefox also supports <kbd>Control+Tab</kbd> and <kbd>Control+Shift+Tab</kbd> to move between tabs. Internet Explorer 7 also uses <kbd>Control+Tab</kbd> and <kbd>Control+Shift+Tab</kbd>. There may be advantages to using <kbd>Control+PageUp</kbd>/<kbd>Control+PageDown</kbd> as the keys to change tabs since it is a recognizable keystroke to at  least Firefox users and is also supported by the Windows operating  system to move between panels in a tabbed dialog. The problem is that  if the user is within a tabbed interface control on a Web page, they  can not easily switch browser tabs without first moving focus outside  of the tabbed interface control. This may be acceptable. The other  issue is if the entire Web page is a tabbed interface control - in that  case the user could not ever switch browser tabs unless the control on  the Web page ignored the <kbd>Control+PageUp</kbd>/<kbd>Control+PageDown</kbd> keypress (and thus  letting the browser access it) when the first or last tab was reached.
+					</p>
+				</div>
+				<div id="panel6" class="panel" aria-labelledby="tab6">
+					<h3>WAI-ARIA Roles, States, and Properties</h3>
+					<ul>
+						<li>The tabbed interface component contains tabs and their associated content panels.</li>
+						<li>The content panel uses the role <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tabpanel" id="tabpanel"><code>tabpanel</code></a>.</li>
+						<li>An element with role <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tab"><code>tab</code></a> is used as a grouping label, providing a link for selecting the tabpanel to be rendered to the user.</li>
+						<li>Assign the <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-controls"><code>aria-controls</code></a> relationship of a tab to the ID of its tabpanel.</li>
+						<li>Authors manage the selected state of each tab by maintaining its <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-selected"><code>aria-selected</code></a> state.</li>
+						<li>A <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tablist"><code>tablist</code></a> is the container role for a set of elements with the role attribute set to <a href="http://www.w3.org/TR/2011/CR-wai-aria-20110118/roles#tab"><code>tab</code></a>.</li>
+					</ul>
+				</div>
+			</div>
+		</section>
 	</div>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+	<script src="../src/jquery.TabaKordion.js"></script>
 	<script type="text/javascript">
 		$(function() {
 			$('.tabakordion').TabaKordion();
 		});
 	</script>
-	<script type="text/javascript">var _gaq=[['_setAccount','UA-33380752-1'],['_trackPageview']];(function(d,t){var ga=d.createElement(t);ga.type='text/javascript';ga.async=1;ga.src=('https:' == document.location.protocol ? 'https://ssl' : 'http://www')+'.google-analytics.com/ga.js';var s=d.getElementsByTagName(t)[0];s.parentNode.insertBefore(ga,s);}(document,'script'));</script>
+	<script type="text/javascript">$(document).ready(function(){$('header').append('<form action="."><label for="theme">Select theme</label><select id="theme"><option value="../css/monotone.css" selected="selected">Monotone styling</option><option value="../css/basic.css">Basic styling</option></select></form>');$('select').change(function(){$('link').attr('href', this.value);});}); var _gaq=[['_setAccount','UA-33380752-1'],['_trackPageview']];(function(d,t){var ga=d.createElement(t);ga.type='text/javascript';ga.async=1;ga.src=('https:' == document.location.protocol ? 'https://ssl' : 'http://www')+'.google-analytics.com/ga.js';var s=d.getElementsByTagName(t)[0];s.parentNode.insertBefore(ga,s);}(document,'script'));</script>
 </body>
 </html>
