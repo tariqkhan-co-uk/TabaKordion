@@ -204,6 +204,7 @@
 					$panel.hide();
 				}
 			}
+			$('html, body').stop().animate({scrollTop: $tab.offset().top});
 		},
 		// Focus new tab header and if tabs; current panel is hidden and new panel is displayed
 		switchTabs: function($curTab, $newTab) {
@@ -213,6 +214,7 @@
 				this.$TabaKordion.find('#'+$newTab.attr('aria-controls')).show().attr('aria-hidden', 'false');
 			}
 			$newTab.addClass('selected').attr('aria-selected', 'true').attr('tabindex', '0').focus();
+			$('html, body').stop().animate({scrollTop: $newTab.offset().top});
 		},
 		// Tab header key down event handler: return true = propagating, false = consuming event
 		tabKeyDownHandler: function($tab, e) {
