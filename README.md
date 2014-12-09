@@ -10,7 +10,7 @@ The TabaKordion plugin can be configured to work differently by use of classes o
 
 ## Demo
 
-> [Demo](https://cdn.rawgit.com/tariqkhan-co-uk/TabaKordion/master/demo/index.html) of TabaKordion.
+> [Demo](https://cdn.rawgit.com/tariqkhan-co-uk/TabaKordion/master/demo/v2.0.0.html) of TabaKordion.
 
 ## Usage
 
