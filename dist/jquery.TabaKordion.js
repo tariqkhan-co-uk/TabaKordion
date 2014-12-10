@@ -1,10 +1,15 @@
 /*
-* jQuery TabaKordion - v2.0.0
-* A fully accessible to WAI specification; tabs and accordion jQuery plugin.
-* http://www.tariqkhan.co.uk/
+* jQuery TabaKordion - v2.2.0
+* A fully accessible to WAI specification; tabs, accordion and show/hide jQuery plugin using ARIA attributes.
 *
-* Made by Tariq Khan
-* Under MIT License
+* Code: https://github.com/tariqkhan-co-uk/TabaKordion
+* Please report issues at: https://github.com/tariqkhan-co-uk/TabaKordion/issues
+*
+* Copyright (c) 2014 Tariq Khan (http://www.tariqkhan.co.uk/)
+*
+* Dual licensed under the MIT and GPL licenses:
+* http://www.opensource.org/licenses/mit-license.php
+* http://www.gnu.org/licenses/gpl.html
 */
 (function($, window, undefined) {
 	"use strict";
@@ -197,6 +202,7 @@
 					$panel.hide();
 				}
 			}
+			$('html, body').stop().animate({scrollTop: $tab.offset().top});
 		},
 		switchTabs: function($curTab, $newTab) {
 			$curTab.removeClass('selected focus').attr('tabindex', '-1').attr('aria-selected', 'false');
@@ -205,6 +211,7 @@
 				this.$TabaKordion.find('#'+$newTab.attr('aria-controls')).show().attr('aria-hidden', 'false');
 			}
 			$newTab.addClass('selected').attr('aria-selected', 'true').attr('tabindex', '0').focus();
+			$('html, body').stop().animate({scrollTop: $newTab.offset().top});
 		},
 		tabKeyDownHandler: function($tab, e) {
 			if(e.altKey || (this.options.showHide && (e.keyCode !== this.keys.enter && e.keyCode !== this.keys.space))) {
