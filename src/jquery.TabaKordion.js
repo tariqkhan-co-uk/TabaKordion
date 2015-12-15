@@ -5,7 +5,7 @@
 * Code: https://github.com/tariqkhan-co-uk/TabaKordion
 * Please report issues at: https://github.com/tariqkhan-co-uk/TabaKordion/issues
 *
-* Copyright (c) 2014 Tariq Khan (http://www.tariqkhan.co.uk/)
+* Copyright (c) 2015 Tariq Khan (http://www.tariqkhan.co.uk/)
 *
 * Dual licensed under the MIT and GPL licenses:
 * http://www.opensource.org/licenses/mit-license.php

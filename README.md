@@ -68,7 +68,7 @@ Contains the Production ready TabaKordion plugin JavaScript file with a minified
 
 #### [src/](https://github.com/tariqkhan-co-uk/TabaKordion/tree/master/src)
 
-Contains the TabaKordion plugin JavaScript file. This file may not be Production ready and may contain incomplete development code. Please use the version in the dist folder for anything and everything.
+Contains the TabaKordion plugin JavaScript file. This file may not be Production ready and may contain incomplete development code.
 
 #### [CONTRIBUTING.md](https://github.com/tariqkhan-co-uk/TabaKordion/blob/master/CONTRIBUTING.md)
 
