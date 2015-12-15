@@ -160,9 +160,9 @@ option:hover {
 .tabakordion .tab[aria-expanded="true"]:before {
 	content:'\25B4'; /* 25BC 25B2 25BE 25B4 */
 }
-/*TABS*/	
+/*TABS*/
 .tabakordion.tabs ul:first-child {
-	margin:0;	
+	margin:0;
 	padding:0;
 	list-style:none;
 }

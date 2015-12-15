@@ -1,18 +1,31 @@
+/*
+* jQuery TabaKordion - v2.2.0
+* A fully accessible to WAI specification; tabs, accordion and show/hide jQuery plugin using ARIA attributes.
+*
+* Code: https://github.com/tariqkhan-co-uk/TabaKordion
+* Please report issues at: https://github.com/tariqkhan-co-uk/TabaKordion/issues
+*
+* Copyright (c) 2014 Tariq Khan (http://www.tariqkhan.co.uk/)
+*
+* Dual licensed under the MIT and GPL licenses:
+* http://www.opensource.org/licenses/mit-license.php
+* http://www.gnu.org/licenses/gpl.html
+*/
 (function($, window, undefined) {
-	"use strict";
+	'use strict';
 	var	pluginName = 'TabaKordion',
 		defaults = {
-			accordion:		true,	// Function as accordion by default else function as tabs
-			openFirst:		true,	// Open first panel on page load if true unless indicated by select class
-			multiSelect:	true,	// Open multiple panels simultaneously if true (false fails WAI specifications)
-			showHide:		false	// Function as show/hide region
+			accordion:		true,				// Function as accordion by default else function as tabs
+			multiSelect:	true,				// Open multiple panels simultaneously if true (false fails WAI specifications)
+			openFirst:		false,				// Open first panel on page load if true unless indicated by select class
+			showHide:		false,				// Function as show/hide region
+			hiddenClass:	'visually_hidden'	// CSS class used to visually hide span containing accessible text
 		};
 	function TabaKordion(element, options) {
-		this.element = element;
-		this.options = $.extend( {}, defaults, options);
+		this.$TabaKordion = $(element);
+		this.options = $.extend({}, defaults, options);
 		this._defaults = defaults;
 		this._name = pluginName;
-		this.$TabaKordion = $(element);
 		if(this.$TabaKordion.hasClass('tabs')) {
 			this.options.accordion = false;
 		} else if(this.$TabaKordion.hasClass('nomultiselect')) {
@@ -21,7 +34,7 @@
 			this.options.showHide = true;
 		}
 		this.$tabs = this.options.showHide ? this.$TabaKordion : this.$TabaKordion.find('.tab');
-		this.$panels = this.options.showHide ? $(this.$TabaKordion.attr('href')) : this.$TabaKordion.children('.panel');
+		this.$panels = this.options.showHide ? $(this.$TabaKordion.attr('href')) : this.$TabaKordion.find('.panel');
 		this.keys = new keyCodes();
 		this.bindEventHandlers();
 		this.init();
@@ -82,7 +95,7 @@
 					if(this.options.multiSelect) {
 						this.$TabaKordion.attr('multiselectable', true);
 					}
-					this.$tabs.attr('aria-expanded', 'false').append(' <span class="visually-hidden">(collapsed)</span>');
+					this.$tabs.attr('aria-expanded', 'false').append(' <span class="'+this.options.hiddenClass+'">(collapsed)</span>');
 				} else {
 					this.$TabaKordion.find('ul:first-child').attr('role', 'tablist');
 					this.$tabs.find('a').each(function() {
@@ -90,13 +103,13 @@
 					});
 				}
 			}
-			var $tab, $found = false, anchor = window.location.hash;
+			var $selectedTab, $found = false, anchor = window.location.hash;
 			if(anchor) {
 				anchor = anchor.substring(1);
 				if(this.options.showHide && (this.$tabs.attr('id') == anchor || this.$panels.attr('id') == anchor || this.$panels.find('#'+anchor).length)) {
 					this.toggleRegion();
-				} else if(this.$TabaKordion.find(anchor).length) {
-					anchor = anchor.substring(1);
+					$found = this.$tabs.attr('id');
+				} else if(this.$TabaKordion.find('#'+anchor).length) {
 					this.$tabs.removeClass('selected');
 					this.$tabs.each(function() {
 						if($(this).attr('id') == anchor) {
@@ -121,15 +134,22 @@
 				}
 			}
 			if(!this.options.showHide) {
-				$tab = this.$tabs.filter('.selected');
-				if(!$tab.length && this.options.openFirst) {
-					$tab = this.$tabs.first();
+				$selectedTab = this.$tabs.filter('.selected');
+				if(!$selectedTab.length && (this.options.openFirst || !this.options.accordion)) {
+					$selectedTab = this.$tabs.first();
+				} else if(!$selectedTab.length && this.options.accordion) {
+					this.$tabs.first().addClass('selected').attr('aria-selected', 'true').attr('tabindex', '0');
 				}
-				$tab.addClass('selected').attr('aria-selected', 'true').attr('tabindex', '0');
-				if(this.options.accordion) {
-					$tab.attr('aria-expanded', 'true').find('.visually-hidden').text('(expanded)');
+				if($selectedTab.length) {
+					$selectedTab.addClass('selected').attr('aria-selected', 'true').attr('tabindex', '0');
+					if(this.options.accordion) {
+						$selectedTab.attr('aria-expanded', 'true').find('.'+this.options.hiddenClass).text('(expanded)');
+					}
+					this.$TabaKordion.find('#'+$selectedTab.attr('aria-controls')).show().attr('aria-hidden', 'false');
 				}
-				this.$TabaKordion.find('#'+$tab.attr('aria-controls')).show().attr('aria-hidden', 'false');
+			}
+			if($found.length) {
+				$('html, body').stop().animate({scrollTop: $found.offset().top});
 			}
 		},
 		bindEventHandlers: function() {
@@ -180,31 +200,39 @@
 		},
 		// Show/hide panel associated with tab header
 		togglePanel: function($tab) {
-			if(!this.options.accordion) {
-				this.$panels.attr('aria-hidden', 'true').hide();
-			} else if(this.options.accordion && !this.options.multiSelect) {
-				this.$tabs.attr('aria-expanded', 'false').find('.visually-hidden').text('(collapsed)');
-				this.$panels.attr('aria-hidden', 'true').slideUp();
-			}
-			var $panel = this.$TabaKordion.find('#'+$tab.attr('aria-controls'));
-			if($panel.attr('aria-hidden') === 'true') {
-				$panel.attr('aria-hidden', 'false');
-				if(this.options.accordion) {
-					$tab.attr('aria-expanded', 'true').find('.visually-hidden').text('(expanded)');
-					$panel.slideDown();
-				} else {
-					$panel.show();
+			var thisObj = this, $panel = this.$TabaKordion.find('#'+$tab.attr('aria-controls'));
+			if(this.options.accordion) {
+				if(!this.options.multiSelect) {
+					var panelNumber = this.$panels.length-1;
+					this.$panels.each(function(index) {
+						if($(this).attr('aria-hidden') === 'false' || index === panelNumber) {
+							if($(this).attr('aria-labelledby') !== $tab.attr('id')) {
+								$(this).attr('aria-hidden', 'true').slideUp(function() {
+									thisObj.$tabs.attr('aria-expanded', 'false').find('.'+thisObj.options.hiddenClass).text('(collapsed)');
+									$tab.attr('aria-expanded', 'true').find('.'+thisObj.options.hiddenClass).text('(expanded)');
+									$panel.attr('aria-hidden', 'false').slideDown();
+									$('html, body').stop().animate({scrollTop: $tab.offset().top});
+								});
+							}
+							return false;
+						}
+					});
+					return false;
 				}
-			} else {
-				$panel.attr('aria-hidden', 'true');
-				if(this.options.accordion) {
-					$tab.attr('aria-expanded', 'false').find('.visually-hidden').text('(collapsed)');
-					$panel.slideUp();
+				if($panel.attr('aria-hidden') === 'true') {
+					$tab.attr('aria-expanded', 'true').find('.'+this.options.hiddenClass).text('(expanded)');
+					$panel.attr('aria-hidden', 'false').slideDown();
 				} else {
-					$panel.hide();
+					$tab.attr('aria-expanded', 'false').find('.'+this.options.hiddenClass).text('(collapsed)');
+					$panel.attr('aria-hidden', 'true').slideUp();
 				}
+				$('html, body').stop().animate({scrollTop: $tab.offset().top});
+			} else { // Else tabs
+				this.$TabaKordion.find('[aria-hidden="false"]').slideUp(function() {
+					thisObj.$panels.attr('aria-hidden', 'true').hide();
+					$panel.attr('aria-hidden', 'false').slideDown();
+				});
 			}
-			$('html, body').stop().animate({scrollTop: $tab.offset().top});
 		},
 		// Focus new tab header and if tabs; current panel is hidden and new panel is displayed
 		switchTabs: function($curTab, $newTab) {

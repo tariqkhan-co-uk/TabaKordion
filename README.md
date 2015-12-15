@@ -10,7 +10,7 @@ The TabaKordion plugin can be configured to work differently by use of classes o
 
 ## Demo
 
-> [Demo](https://cdn.rawgit.com/tariqkhan-co-uk/TabaKordion/master/demo/v2.0.0.html) of TabaKordion.
+> [Demo](https://cdn.rawgit.com/tariqkhan-co-uk/TabaKordion/master/demo/v2.2.0.html) of TabaKordion.
 
 ## Usage
 
@@ -38,7 +38,8 @@ The basic structure of the project is given in the following way:
 
 ```
 ├── css/
-│   └── style.css
+│   ├── basic.css
+│   └── monotone.css
 ├── demo/
 │   └── index.html
 ├── dist/
@@ -49,12 +50,13 @@ The basic structure of the project is given in the following way:
 ├── CONTRIBUTING.md
 ├── LICENSE
 ├── README.md
-└── TabaKordion.jquery.json
+├── TabaKordion.jquery.json
+└── TabaKordion.png
 ```
 
 #### [css/](https://github.com/tariqkhan-co-uk/TabaKordion/tree/master/css)
 
-Contains a simple CSS file to apply basic styling to the TabaKordion plugin. This stylesheet is not required and you should apply your own styling to suite the design of you website or page.
+Contains a simple CSS file to apply basic styling to the TabaKordion plugin. This stylesheet is not required and you should apply your own styling to suite the design of you website or page. The Monotone CSS file is an example of how you could apply your own styling.
 
 #### [demo/](https://github.com/tariqkhan-co-uk/TabaKordion/tree/master/demo)
 
@@ -66,7 +68,7 @@ Contains the Production ready TabaKordion plugin JavaScript file with a minified
 
 #### [src/](https://github.com/tariqkhan-co-uk/TabaKordion/tree/master/src)
 
-Contains the TabaKordion plugin JavaScript file. This file may not be Production ready and may contain incomplete development code.
+Contains the TabaKordion plugin JavaScript file. This file may not be Production ready and may contain incomplete development code. Please use the version in the dist folder for anything and everything.
 
 #### [CONTRIBUTING.md](https://github.com/tariqkhan-co-uk/TabaKordion/blob/master/CONTRIBUTING.md)
 
@@ -85,6 +87,10 @@ You are "reading" it.
 Package manifest file used to publish plugins to the jQuery Plugin Registry.
 
 > Check this [Package Manifest Guide](http://plugins.jquery.com/docs/package-manifest/) for more details.
+
+#### [TabaKordion.png](https://github.com/tariqkhan-co-uk/TabaKordion/blob/master/TabaKordion.png)
+
+A logo image for the plugin.
 
 ## Guides
 
@@ -151,7 +157,7 @@ The default behaviour of the accordion is to allow having multiple panels open s
 
 #### 1.2 Preselected panel
 
-The first panel will be open by default when the page loads. If the URL contains an anchor at the end of the page name and that anchor is either the ID of the accordion header or accordion panel or is an element within a panel; that panel will be open by default overriding the "default first panel" behaviour.
+No panel will be open by default when the page loads. If the URL contains an anchor at the end of the page name and that anchor is either the ID of the accordion header or accordion panel or is an element within a panel; that panel will be open by default overriding the "default first panel" behaviour.
 
 To manually configure a panel to be open by default, you simply need to assign the 'selected' class on the panel header.
 
