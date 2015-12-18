@@ -96,13 +96,13 @@ label {
 	border-radius:6px 6px 0 0;
 }
 select {
-    border:0;
-    width:100%;
-    font-weight:700;
-    box-shadow:none;
-    background:#FFF;
-    text-align:center;
-    -webkit-appearance:none;
+	border:0;
+	width:100%;
+	font-weight:700;
+	box-shadow:none;
+	background:#FFF;
+	text-align:center;
+	-webkit-appearance:none;
 }
 select:focus {
 	color:#FFF;

@@ -1,5 +1,5 @@
 /*
-* jQuery TabaKordion - v2.2.0
+* jQuery TabaKordion - v2.2.3
 * A fully accessible to WAI specification; tabs, accordion and show/hide jQuery plugin using ARIA attributes.
 *
 * Code: https://github.com/tariqkhan-co-uk/TabaKordion
@@ -13,8 +13,7 @@
 */
 (function($, window, undefined) {
 	'use strict';
-	var	pluginName = 'TabaKordion',
-		defaults = {
+	var	defaults = {
 			accordion:		true,				// Function as accordion by default else function as tabs
 			multiSelect:	true,				// Open multiple panels simultaneously if true (false fails WAI specifications)
 			openFirst:		false,				// Open first panel on page load if true unless indicated by select class
@@ -25,7 +24,7 @@
 		this.$TabaKordion = $(element);
 		this.options = $.extend({}, defaults, options);
 		this._defaults = defaults;
-		this._name = pluginName;
+		this._name = 'TabaKordion';
 		if(this.$TabaKordion.hasClass('tabs')) {
 			this.options.accordion = false;
 		} else if(this.$TabaKordion.hasClass('nomultiselect')) {
@@ -189,17 +188,15 @@
 			var thisObj = this, $panel = this.$TabaKordion.find('#'+$tab.attr('aria-controls'));
 			if(this.options.accordion) {
 				if(!this.options.multiSelect) {
-					var panelNumber = this.$panels.length-1;
+					var totalPanels = this.$panels.length-1;
 					this.$panels.each(function(index) {
-						if($(this).attr('aria-hidden') === 'false' || index === panelNumber) {
-							if($(this).attr('aria-labelledby') !== $tab.attr('id')) {
-								$(this).attr('aria-hidden', 'true').slideUp(function() {
-									thisObj.$tabs.attr('aria-expanded', 'false').find('.'+thisObj.options.hiddenClass).text('(collapsed)');
-									$tab.attr('aria-expanded', 'true').find('.'+thisObj.options.hiddenClass).text('(expanded)');
-									$panel.attr('aria-hidden', 'false').slideDown();
-									$('html, body').stop().animate({scrollTop: $tab.offset().top});
-								});
-							}
+						if(($(this).attr('aria-hidden') === 'false' || index === totalPanels) && $tab.attr('aria-expanded') === 'false') {
+							$(this).attr('aria-hidden', 'true').slideUp(function() {
+								thisObj.$tabs.attr('aria-expanded', 'false').find('.'+thisObj.options.hiddenClass).text('(collapsed)');
+								$tab.attr('aria-expanded', 'true').find('.'+thisObj.options.hiddenClass).text('(expanded)');
+								$panel.attr('aria-hidden', 'false').slideDown();
+								$('html, body').stop().animate({scrollTop: $tab.offset().top});
+							});
 							return false;
 						}
 					});
@@ -385,11 +382,9 @@
 			return true;
 		}
 	};
-	$.fn[pluginName] = function(options) {
+	$.fn.TabaKordion = function(options) {
 		return this.each(function() {
-			if(!$.data(this, 'plugin_'+pluginName)) {
-				$.data(this, 'plugin_'+pluginName, new TabaKordion(this, options));
-			}
+			$.data(this, 'plugin_TabaKordion') || $.data(this, 'plugin_TabaKordion', new TabaKordion(this, options));
 		});
 	}
 })(jQuery, window);
