@@ -1,7 +1,7 @@
 {
 	"name": "TabaKordion",
 	"title": "jQuery TabaKordion",
-	"description": "A fully accessible to WAI specification; tabs, accordion and show/hide jQuery plugin using ARIA attributes.",
+	"description": "A fully accessible to WAI specification; tabs, accordion and show/hide jQuery plugin using ARIA attributes. Tested on Jaws, NVDA and Apple VoiceOver.",
 	"keywords": [
 		"jquery",
 		"TabaKordion",
@@ -14,7 +14,7 @@
 		"WAI",
 		"ARIA"
 	],
-	"version": "2.2.3",
+	"version": "2.3",
 	"author": {
 		"name": "Tariq Khan",
 		"url": "https://github.com/tariqkhan-co-uk/"

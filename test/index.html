@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>QUnit Test Suite</title>
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.21.0.css">
+	<link rel="stylesheet" href="../css/basic.css">
+</head>
+<body>
+	<div style="margin:0 0 20px">
+		<a href="#showhide-region" class="tabakordion showhide">Sample text</a>
+		<div id="showhide-region"><p>Sample content</p></div>
+	</div>
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+	<script src="../src/jquery.TabaKordion.js"></script>
+	<script src="//code.jquery.com/qunit/qunit-1.21.0.js"></script>
+	<script>
+		var $toTest = $('.tabakordion'), attr = $toTest.attr('href');
+		QUnit.test('TabaKordion show/hide markup test', function(assert) {
+			assert.expect(5);
+			assert.ok($toTest.length != 0, 'TabaKordion class exists');
+			assert.deepEqual($toTest.hasClass('showhide'), true, 'TabaKordion is configured to work as show/hide');
+			assert.deepEqual($toTest.is('a'), true, 'Trigger is an anchor');
+			assert.ok(typeof attr !== typeof undefined && attr !== false, 'Anchor has a hypermedia reference');
+			assert.ok($(attr).length != 0, 'Hypermedia reference exists on page');
+		});
+		QUnit.test('TabaKordion is chainable', function(assert) {
+			assert.expect(2);
+			assert.ok($toTest.TabaKordion().addClass('testing'), 'TabaKordion can be chained');
+			assert.deepEqual($toTest.hasClass('testing'), true, 'Class "testing" was added correctly from chaining');
+			$toTest.removeClass('testing');
+		});
+	</script>
+</body>
+</html>

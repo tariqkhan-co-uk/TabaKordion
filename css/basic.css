@@ -30,9 +30,9 @@ a:hover, a:focus {
 	background:#000;
 	border-color:#F00;
 }
-/*TABS*/	
+/*TABS*/
 .tabakordion.tabs ul:first-child {
-	margin:0;	
+	margin:0;
 	padding:0;
 	list-style:none;
 }

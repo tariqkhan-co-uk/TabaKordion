@@ -6,11 +6,13 @@ This plugin has been built to satisfy, by default, all requirements listed withi
 
 > Check [WAI-ARIA 1.0 Authoring Practices](http://www.w3.org/TR/wai-aria-practices/) for more details.
 
+Tested using Jaws, NVDA and Apple VoiceOver.
+
 The TabaKordion plugin can be configured to work differently by use of classes or by using the common method of parsing configuration data through calling the jQuery plugin. Note that, if configured, the plugin may fail accessibility in some areas.
 
 ## Demo
 
-> [Demo](https://cdn.rawgit.com/tariqkhan-co-uk/TabaKordion/master/demo/v2.2.3.html) of TabaKordion.
+> [Demo](https://cdn.rawgit.com/tariqkhan-co-uk/TabaKordion/master/demo/v2.3.html) of TabaKordion.
 
 ## Usage
 

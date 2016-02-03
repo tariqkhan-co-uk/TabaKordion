@@ -1,11 +1,12 @@
 /*
-* jQuery TabaKordion - v2.2.3
+* jQuery TabaKordion - v2.3
 * A fully accessible to WAI specification; tabs, accordion and show/hide jQuery plugin using ARIA attributes.
+* Tested on Jaws, NVDA and Apple VoiceOver.
 *
 * Code: https://github.com/tariqkhan-co-uk/TabaKordion
 * Please report issues at: https://github.com/tariqkhan-co-uk/TabaKordion/issues
 *
-* Copyright (c) 2015 Tariq Khan (http://www.tariqkhan.co.uk/)
+* Copyright (c) 2016 Tariq Khan (http://www.tariqkhan.co.uk/)
 *
 * Dual licensed under the MIT and GPL licenses:
 * http://www.opensource.org/licenses/mit-license.php
@@ -85,16 +86,16 @@
 		init: function() {
 			if(this.options.showHide) {
 				this.$tabs.attr('aria-expanded', 'false').attr('aria-controls', this.$panels.attr('id')).prepend('<span>Show</span> ');
-				this.$panels.attr('aria-expanded', 'false').attr('aria-labelledby', this.$tabs.attr('id')).attr('role', 'region').attr('tabindex', '-1').addClass('showhide-region').hide();
+				this.$panels.attr('aria-expanded', 'false').attr('aria-labelledby', this.$tabs.attr('id')).attr('role', 'region').attr('tabindex', -1).addClass('showhide-region').hide();
 			} else {
 				this.$panels.attr('role', 'tabpanel').attr('aria-hidden', 'true').hide();
-				this.$tabs.attr('role', 'tab').attr('aria-selected', 'false').attr('tabindex', '-1');
+				this.$tabs.attr('role', 'tab').attr('aria-selected', 'false').attr('tabindex', -1);
 				if(this.options.accordion) {
 					this.$TabaKordion.attr('role', 'tablist');
 					if(this.options.multiSelect) {
 						this.$TabaKordion.attr('multiselectable', true);
 					}
-					this.$tabs.attr('aria-expanded', 'false').append(' <span class="'+this.options.hiddenClass+'">(collapsed)</span>');
+					this.$tabs.attr('aria-expanded', 'false').append(' <span class="'+this.options.hiddenClass+'">collapsed</span>');
 				} else {
 					this.$TabaKordion.find('ul:first-child').attr('role', 'tablist');
 					this.$tabs.find('a').each(function() {
@@ -137,12 +138,12 @@
 				if(!$selectedTab.length && (this.options.openFirst || !this.options.accordion)) {
 					$selectedTab = this.$tabs.first();
 				} else if(!$selectedTab.length && this.options.accordion) {
-					this.$tabs.first().addClass('selected').attr('aria-selected', 'true').attr('tabindex', '0');
+					this.$tabs.first().addClass('selected').attr('aria-selected', 'true').attr('tabindex', 0);
 				}
 				if($selectedTab.length) {
-					$selectedTab.addClass('selected').attr('aria-selected', 'true').attr('tabindex', '0');
+					$selectedTab.addClass('selected').attr('aria-selected', 'true').attr('tabindex', 0);
 					if(this.options.accordion) {
-						$selectedTab.attr('aria-expanded', 'true').find('.'+this.options.hiddenClass).text('(expanded)');
+						$selectedTab.attr('aria-expanded', 'true').find('.'+this.options.hiddenClass).text('expanded');
 					}
 					this.$TabaKordion.find('#'+$selectedTab.attr('aria-controls')).show().attr('aria-hidden', 'false');
 				}
@@ -189,27 +190,31 @@
 			var $tab = this.$tabs;
 			this.$panels.slideToggle(function() {
 				if($(this).attr('aria-expanded') === 'false') {
-					$(this).attr('aria-expanded', 'true').focus();
 					$tab.attr('aria-expanded', 'true').addClass('selected').find('span').html('Hide');
+					$(this).attr('aria-expanded', 'true').focus();
 				} else {
-					$(this).attr('aria-expanded', 'false');
 					$tab.attr('aria-expanded', 'false').removeClass('selected').find('span').html('Show');
+					$(this).attr('aria-expanded', 'false');
 				}
 			});
 		},
 		// Show/hide panel associated with tab header
 		togglePanel: function($tab) {
 			var thisObj = this, $panel = this.$TabaKordion.find('#'+$tab.attr('aria-controls'));
-			if(this.options.accordion) {
+			if($tab.attr('aria-expanded') === 'true') {
+				$panel.attr('tabindex', -1).focus();
+			} else if(this.options.accordion) {
 				if(!this.options.multiSelect) {
 					var totalPanels = this.$panels.length-1;
 					this.$panels.each(function(index) {
 						if(($(this).attr('aria-hidden') === 'false' || index === totalPanels) && $tab.attr('aria-expanded') === 'false') {
 							$(this).attr('aria-hidden', 'true').slideUp(function() {
-								thisObj.$tabs.attr('aria-expanded', 'false').find('.'+thisObj.options.hiddenClass).text('(collapsed)');
-								$tab.attr('aria-expanded', 'true').find('.'+thisObj.options.hiddenClass).text('(expanded)');
+								thisObj.$tabs.attr('aria-expanded', 'false').find('.'+thisObj.options.hiddenClass).text('collapsed');
+								$tab.attr('aria-expanded', 'true').find('.'+thisObj.options.hiddenClass).text('expanded');
 								$panel.attr('aria-hidden', 'false').slideDown();
-								$('html, body').stop().animate({scrollTop: $tab.offset().top});
+								$('html, body').stop().animate({scrollTop: $tab.offset().top}, function() {
+									$panel.attr('tabindex', -1).focus();
+								});
 							});
 							return false;
 						}
@@ -217,28 +222,32 @@
 					return false;
 				}
 				if($panel.attr('aria-hidden') === 'true') {
-					$tab.attr('aria-expanded', 'true').find('.'+this.options.hiddenClass).text('(expanded)');
-					$panel.attr('aria-hidden', 'false').slideDown();
+					$tab.attr('aria-expanded', 'true').find('.'+this.options.hiddenClass).text('expanded');
+					$panel.attr('aria-hidden', 'false').slideDown(function() {
+						$panel.attr('tabindex', -1).focus();
+					});
 				} else {
-					$tab.attr('aria-expanded', 'false').find('.'+this.options.hiddenClass).text('(collapsed)');
+					$tab.attr('aria-expanded', 'false').find('.'+this.options.hiddenClass).text('collapsed');
 					$panel.attr('aria-hidden', 'true').slideUp();
 				}
 				$('html, body').stop().animate({scrollTop: $tab.offset().top});
 			} else { // Else tabs
 				this.$TabaKordion.find('[aria-hidden="false"]').slideUp(function() {
 					thisObj.$panels.attr('aria-hidden', 'true').hide();
-					$panel.attr('aria-hidden', 'false').slideDown();
+					$panel.attr('aria-hidden', 'false').slideDown(function() {
+						$(this).attr('tabindex', -1).focus();
+					});
 				});
 			}
 		},
 		// Focus new tab header and if tabs; current panel is hidden and new panel is displayed
 		switchTabs: function($curTab, $newTab) {
-			$curTab.removeClass('selected focus').attr('tabindex', '-1').attr('aria-selected', 'false');
+			$curTab.removeClass('selected focus').attr('tabindex', -1).attr('aria-selected', 'false');
 			if(!this.options.accordion) {
 				this.$TabaKordion.find('#'+$curTab.attr('aria-controls')).hide().attr('aria-hidden', 'true');
 				this.$TabaKordion.find('#'+$newTab.attr('aria-controls')).show().attr('aria-hidden', 'false');
 			}
-			$newTab.addClass('selected').attr('aria-selected', 'true').attr('tabindex', '0').focus();
+			$newTab.addClass('selected').attr('aria-selected', 'true').attr('tabindex', 0).focus();
 			$('html, body').stop().animate({scrollTop: $newTab.offset().top});
 		},
 		// Tab header key down event handler: return true = propagating, false = consuming event
@@ -253,6 +262,8 @@
 						this.options.showHide ? this.toggleRegion() : this.togglePanel($tab);
 						e.stopPropagation();
 						return false;
+					} else {
+						$('#'+$tab.attr('aria-controls')).attr('tabindex', -1).focus();
 					}
 					return true;
 				}
@@ -293,8 +304,8 @@
 			if(this.options.showHide) {
 				this.toggleRegion();
 			} else {
-				$tab.addClass('selected').attr('tabindex', '0').attr('aria-selected', 'true');
-				this.$tabs.not($tab).attr('tabindex', '-1').attr('aria-selected', 'false').removeClass('selected');
+				$tab.addClass('selected').attr('tabindex', 0).attr('aria-selected', 'true');
+				this.$tabs.not($tab).attr('tabindex', -1).attr('aria-selected', 'false').removeClass('selected');
 				this.togglePanel($tab);
 			}
 			if(this.options.accordion) {
@@ -409,8 +420,8 @@
 			if(this.options.showHide) {
 				this.$tabs.addClass('selected');
 			} else {
-				var $tab = $('#'+$panel.attr('aria-labelledby')).attr('tabindex', '0').attr('aria-selected', 'true').addClass('selected');
-				this.$tabs.not($tab).attr('tabindex', '-1').attr('aria-selected', 'false').removeClass('selected');
+				var $tab = $('#'+$panel.attr('aria-labelledby')).attr('tabindex', 0).attr('aria-selected', 'true').addClass('selected');
+				this.$tabs.not($tab).attr('tabindex', -1).attr('aria-selected', 'false').removeClass('selected');
 			}
 			return true;
 		}
